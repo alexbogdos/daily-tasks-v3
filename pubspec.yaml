@@ -14,7 +14,9 @@ dependencies:
   get: ^4.6.1
   flutter_slidable: ^1.2.0
   shared_preferences: ^2.0.13
-
+  fluttertoast: ^8.0.9
+  file_picker_cross: ^4.5.0
+  path_provider: ^2.0.9
 
 
 dev_dependencies:

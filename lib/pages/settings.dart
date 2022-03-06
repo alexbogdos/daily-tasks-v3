@@ -1,6 +1,15 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:daily_tasks_v3/pages/coding.dart';
+import 'package:daily_tasks_v3/pages/economics.dart';
+import 'package:daily_tasks_v3/pages/greek.dart';
+import 'package:daily_tasks_v3/pages/mathematics.dart';
+import 'package:daily_tasks_v3/pages/personal.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:file_picker/file_picker.dart';
 
 class PageSettings extends StatefulWidget {
   const PageSettings({Key? key}) : super(key: key);
@@ -10,6 +19,14 @@ class PageSettings extends StatefulWidget {
 }
 
 class _PageSettingsState extends State<PageSettings> {
+  String? _directoryPath;
+
+  Future<void> _selectFolder() async {
+    await FilePicker.platform.getDirectoryPath().then((value) {
+      setState(() => _directoryPath = value);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +79,18 @@ class _PageSettingsState extends State<PageSettings> {
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.12,
                         ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            _selectFolder().then((value) => saveFiles("$_directoryPath"));
+                          },
+                          child: Text("Save BackUps | Select Root Folder"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            _selectFolder().then((value) => loadFiles("$_directoryPath"));
+                          },
+                          child: Text("Retrieve BackUps | Select Root Folder"),
+                        ),
                       ],
                     ),
                   ),
@@ -90,7 +119,7 @@ class _PageSettingsState extends State<PageSettings> {
                             ),
                           ),
                           TextButton(
-                            onPressed: () async {
+                            onPressed: () {
                               Navigator.of(context).pop();
                             },
                             child: Text(''),
@@ -112,5 +141,48 @@ class _PageSettingsState extends State<PageSettings> {
         ),
       ),
     );
+  }
+
+  String getRandom(){
+    const ch = 'AaBbCcDdEeFf';
+    const num = '0123456789';
+    Random r = Random();
+    String str1 =  String.fromCharCodes(Iterable.generate(
+        2, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
+    String str2 =  String.fromCharCodes(Iterable.generate(
+        2, (_) => num.codeUnitAt(r.nextInt(num.length))));
+    return "$str1$str2";
+  }
+  
+  void saveFiles(String path) {
+    saveFile_personal(path);
+    saveFile_mathematics(path);
+    saveFile_greek(path);
+    saveFile_economics(path);
+    saveFile_coding(path);
+  }
+
+  void loadFiles(String path) {
+    readFile_personal(path);
+    readFile_mathematics(path);
+    readFile_greek(path);
+    readFile_economics(path);
+    readFile_coding(path);
+  }
+
+  void showToastMessage(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        //message to show toast
+        toastLength: Toast.LENGTH_SHORT,
+        //duration for message to show
+        gravity: ToastGravity.TOP,
+        //where you want to show, top, bottom
+        backgroundColor: Colors.black54,
+        //background Color for message
+        textColor: Colors.white,
+        //message text color
+        fontSize: 16.0 //message font size
+        );
   }
 }
