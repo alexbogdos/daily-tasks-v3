@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class PageSettings extends StatefulWidget {
   const PageSettings({Key? key}) : super(key: key);
@@ -29,13 +30,16 @@ class _PageSettingsState extends State<PageSettings> {
 
   @override
   Widget build(BuildContext context) {
+
+    askPermissions();
+
     return Scaffold(
-      backgroundColor: Color(0xffe8c774),
+      backgroundColor: const Color(0xffe8c774),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -57,7 +61,7 @@ class _PageSettingsState extends State<PageSettings> {
                           height: MediaQuery.of(context).size.height * 0.12,
                           child: Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
+                                const EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
                             child: AutoSizeText(
                               'Settings:',
                               style: GoogleFonts.poppins(
@@ -65,7 +69,7 @@ class _PageSettingsState extends State<PageSettings> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                                 shadows: [
-                                  Shadow(
+                                  const Shadow(
                                     blurRadius: 8.0,
                                     color: Colors.black12,
                                     offset: Offset(-4.0, 4.0),
@@ -83,19 +87,19 @@ class _PageSettingsState extends State<PageSettings> {
                           onPressed: () async {
                             _selectFolder().then((value) => saveFiles("$_directoryPath"));
                           },
-                          child: Text("Save BackUps | Select Root Folder"),
+                          child: const Text("Save BackUps | Select Root Folder"),
                         ),
                         ElevatedButton(
                           onPressed: () async {
                             _selectFolder().then((value) => loadFiles("$_directoryPath"));
                           },
-                          child: Text("Retrieve BackUps | Select Root Folder"),
+                          child: const Text("Retrieve BackUps | Select Root Folder"),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       height: MediaQuery.of(context).size.height * 0.06,
@@ -122,7 +126,7 @@ class _PageSettingsState extends State<PageSettings> {
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text(''),
+                            child: const Text(''),
                             style: TextButton.styleFrom(
                               primary: Colors.white12,
                               shape: RoundedRectangleBorder(
@@ -184,5 +188,14 @@ class _PageSettingsState extends State<PageSettings> {
         //message text color
         fontSize: 16.0 //message font size
         );
+  }
+
+  void askPermissions() async {
+    if (!(await Permission.storage.isGranted)){
+      await Permission.storage.request();
+    }
+    if (!(await Permission.manageExternalStorage.isGranted)){
+      await Permission.manageExternalStorage.request();
+    }
   }
 }

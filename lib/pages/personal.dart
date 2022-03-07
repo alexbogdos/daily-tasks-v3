@@ -1,11 +1,15 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:io';
 import 'package:daily_tasks_v3/templates/tasks_page_template.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 TasksPage PagePersonal = TasksPage(
   title: "Personal",
-  backgroundColors: [Color(0xffFFCB69), Color(0xffD08C60)],
+  backgroundColors: const [Color(0xffFFCB69), Color(0xffD08C60)],
   tasksList: tasksList_personal,
   archivedList: archivedList_personal,
   datesList: datesList_personal,
@@ -25,7 +29,9 @@ void saveLists_personal() async {
   await prefs.setStringList('archivedList_personal', archivedList_personal);
   await prefs.setStringList('datesList_personal', datesList_personal);
 
-  print("Lists saved");
+  if (kDebugMode) {
+    print("Lists saved");
+  }
 }
 
 Future<void> retrieveLists_personal() async {
@@ -39,7 +45,9 @@ Future<void> retrieveLists_personal() async {
       tasksList_personal = _tasksList;
     }
   } else {
-    print("tasksList_personal not in memory");
+    if (kDebugMode) {
+      print("tasksList_personal not in memory");
+    }
   }
 
   if (prefs.containsKey('archivedList_personal')) {
@@ -51,7 +59,9 @@ Future<void> retrieveLists_personal() async {
       archivedList_personal.addAll(_archivedList);
     }
   } else {
-    print("archivedList_personal not in memory");
+    if (kDebugMode) {
+      print("archivedList_personal not in memory");
+    }
   }
 
   if (prefs.containsKey('datesList_personal')) {
@@ -62,7 +72,9 @@ Future<void> retrieveLists_personal() async {
       datesList_personal = _datesList;
     }
   } else {
-    print("datesList_personal not in memory");
+    if (kDebugMode) {
+      print("datesList_personal not in memory");
+    }
   }
 }
 
@@ -85,12 +97,14 @@ Future<void> saveFile_personal(String rootPath) async {
 
   File file_tasksList =  File(filePaths[0]);
   String string = "";
-  print("tasklist: $tasksList_personal  length: ${tasksList_personal.length}");
+  if (kDebugMode) {
+    print("tasklist: $tasksList_personal  length: ${tasksList_personal.length}");
+  }
   for (int index = 0; index < tasksList_personal.length; index++) {
     if (index < tasksList_personal.length - 1) {
-      string += "${tasksList_personal[index]}\n";
+      string += "${tasksList_personal[index]}<||>";
     } else {
-      string += "${tasksList_personal[index]}";
+      string += tasksList_personal[index];
     }
   }
   await file_tasksList.writeAsString(string);
@@ -99,9 +113,9 @@ Future<void> saveFile_personal(String rootPath) async {
   string = "";
   for (int index = 0; index < archivedList_personal.length; index++) {
     if (index < archivedList_personal.length - 1) {
-      string += "${archivedList_personal[index]}\n";
+      string += "${archivedList_personal[index]}<||>";
     } else {
-      string += "${archivedList_personal[index]}";
+      string += archivedList_personal[index];
     }
   }
   await file_archivedList.writeAsString(string);
@@ -110,14 +124,16 @@ Future<void> saveFile_personal(String rootPath) async {
   string = "";
   for (int index = 0; index < datesList_personal.length; index++) {
     if (index < datesList_personal.length - 1) {
-      string += "${datesList_personal[index]}\n";
+      string += "${datesList_personal[index]}<||>";
     } else {
-      string += "${datesList_personal[index]}";
+      string += datesList_personal[index];
     }
   }
   await file_datesList.writeAsString(string);
 
-  print("Lists Saved");
+  if (kDebugMode) {
+    print("Lists Saved");
+  }
 }
 
 Future<void> readFile_personal(String rootPath) async {
@@ -127,30 +143,36 @@ Future<void> readFile_personal(String rootPath) async {
     File file_tasksList = File(filePaths[0]);
     String fileContent_tasksList = await file_tasksList.readAsString();
     if (fileContent_tasksList != "") {
-      tasksList_personal = await fileContent_tasksList.split('\n');
+      tasksList_personal = fileContent_tasksList.split('<||>');
     }
   } else {
-    print("File 'tasksList' don't exists");
+    if (kDebugMode) {
+      print("File 'tasksList' don't exists");
+    }
   }
 
   if (await File(filePaths[1]).exists()) {
     File file_archivedList = File(filePaths[1]);
     String fileContent_archivedList = await file_archivedList.readAsString();
     if (fileContent_archivedList != "") {
-      archivedList_personal = await fileContent_archivedList.split('\n');
+      archivedList_personal = fileContent_archivedList.split('<||>');
     }
   } else {
-    print("File 'archivedList' don't exists");
+    if (kDebugMode) {
+      print("File 'archivedList' don't exists");
+    }
   }
 
   if (await File(filePaths[2]).exists()) {
     File file_datesList = File(filePaths[2]);
     String fileContent_datesList = await file_datesList.readAsString();
     if (fileContent_datesList != "") {
-      datesList_personal = await fileContent_datesList.split('\n');
+      datesList_personal = fileContent_datesList.split('<||>');
     }
   } else {
-    print("File 'datesList' don't exists");
+    if (kDebugMode) {
+      print("File 'datesList' don't exists");
+    }
   }
 
   saveLists_personal();

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_brace_in_string_interps, unnecessary_string_interpolations
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,11 +34,11 @@ class MenuButton extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(13),
       child: Container(
-        width: MediaQuery.of(context).size.width * this.widthP,
+        width: MediaQuery.of(context).size.width * widthP,
         height: MediaQuery.of(context).size.height * 0.112,
         decoration: BoxDecoration(
-          color: this.color,
-          boxShadow: [
+          color: color,
+          boxShadow: const [
             BoxShadow(
               color: Colors.black12,
               blurRadius: 8.0,
@@ -48,7 +50,7 @@ class MenuButton extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: this.function,
+            onTap: function,
             highlightColor: Colors.white12,
             splashColor: Colors.white12,
             child: FittedBox(
@@ -58,9 +60,9 @@ class MenuButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   AutoSizeText(
-                    "${this.title}",
+                    "${title}",
                     style: GoogleFonts.poppins(
-                      fontSize: this.fontSize * 1.0,
+                      fontSize: fontSize * 1.0,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
@@ -71,7 +73,7 @@ class MenuButton extends StatelessWidget {
                   FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Icon(
-                      this.icon,
+                      icon,
                       color: Colors.white,
                       size: 42,
                     ),

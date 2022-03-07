@@ -1,10 +1,13 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
+
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:daily_tasks_v3/widgets/taskSlidable.dart';
+import 'package:daily_tasks_v3/widgets/task_slidable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/archivedTask.dart';
-import '../widgets/editTask_dialog.dart';
+import '../widgets/edittask_dialog.dart';
 
 class TasksPage extends StatefulWidget {
   final List<Color> backgroundColors;
@@ -45,7 +48,7 @@ class _TasksPageState extends State<TasksPage> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: widget.backgroundColors,
-                stops: [0.0, 1.0],
+                stops: const [0.0, 1.0],
               ),
             ),
             child: DefaultTabController(
@@ -92,7 +95,7 @@ class _TasksPageState extends State<TasksPage> {
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
                               shadows: [
-                                Shadow(
+                                const Shadow(
                                   blurRadius: 8.0,
                                   color: Colors.black12,
                                   offset: Offset(-4.0, 4.0),
@@ -103,7 +106,7 @@ class _TasksPageState extends State<TasksPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     TabBar(
@@ -116,14 +119,14 @@ class _TasksPageState extends State<TasksPage> {
                             child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text("Tasks"),
-                            SizedBox(
+                            const Text("Tasks"),
+                            const SizedBox(
                               width: 5,
                             ),
                             Container(
                               width: 40,
                               height: 30,
-                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Center(
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
@@ -148,14 +151,14 @@ class _TasksPageState extends State<TasksPage> {
                             child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text("History"),
-                            SizedBox(
+                            const Text("History"),
+                            const SizedBox(
                               width: 5,
                             ),
                             Container(
                               width: 40,
                               height: 30,
-                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Center(
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
@@ -183,14 +186,14 @@ class _TasksPageState extends State<TasksPage> {
                         children: [
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(5, 10, 5, 0),
+                                const EdgeInsetsDirectional.fromSTEB(5, 10, 5, 0),
                             child: Stack(
-                              alignment: AlignmentDirectional(0, 1),
+                              alignment: const AlignmentDirectional(0, 1),
                               children: [
                                 Scrollbar(
                                   thickness: 6,
                                   interactive: true,
-                                  radius: Radius.circular(5),
+                                  radius: const Radius.circular(5),
                                   child: Theme(
                                     data: Theme.of(context).copyWith(
                                       canvasColor: Colors.transparent,
@@ -233,7 +236,7 @@ class _TasksPageState extends State<TasksPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 30),
                                   child: Container(
                                     width:
@@ -259,7 +262,7 @@ class _TasksPageState extends State<TasksPage> {
                                                 color: button_text_color,
                                                 size: 24,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 4,
                                               ),
                                               AutoSizeText(
@@ -287,7 +290,7 @@ class _TasksPageState extends State<TasksPage> {
                                               notifyParent: () {
                                                 setState(() {});
                                               },
-                                            ).Show().then((value) =>
+                                            ).show().then((value) =>
                                                 refresh(widget.saveLists));
                                           },
                                           onLongPress: () {
@@ -302,10 +305,10 @@ class _TasksPageState extends State<TasksPage> {
                                               notifyParent: () {
                                                 setState(() {});
                                               },
-                                            ).Show().then((value) =>
+                                            ).show().then((value) =>
                                                 refresh(widget.saveLists));
                                           },
-                                          child: Text(''),
+                                          child: const Text(''),
                                           style: TextButton.styleFrom(
                                             primary: Colors.white12,
                                             shape: RoundedRectangleBorder(
@@ -323,11 +326,11 @@ class _TasksPageState extends State<TasksPage> {
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                             child: Scrollbar(
                               thickness: 6,
                               interactive: true,
-                              radius: Radius.circular(5),
+                              radius: const Radius.circular(5),
                               child: ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 itemCount: widget.archivedList.length,
@@ -356,7 +359,9 @@ class _TasksPageState extends State<TasksPage> {
 
   void refresh(function) {
     setState(() {
-      print("refreshed");
+      if (kDebugMode) {
+        print("refreshed");
+      }
       function();
     });
   }

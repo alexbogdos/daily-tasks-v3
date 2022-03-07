@@ -1,12 +1,15 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:io';
 
 import 'package:daily_tasks_v3/templates/tasks_page_template.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-TasksPage PageCoding = TasksPage(
+TasksPage pageCoding = TasksPage(
   title: "Coding",
-  backgroundColors: [Color(0xffFFADAD), Color(0xffFFC6FF)],
+  backgroundColors: const [Color(0xffFFADAD), Color(0xffFFC6FF)],
   tasksList: tasksList_coding,
   archivedList: archivedList_coding,
   datesList: datesList_coding,
@@ -38,7 +41,9 @@ Future<void> retrieveLists_coding () async{
       tasksList_coding = _tasksList;
     }
   }else {
-    print("tasksList_coding not in memory");
+    if (kDebugMode) {
+      print("tasksList_coding not in memory");
+    }
   }
 
   if (prefs.containsKey('archivedList_coding')) {
@@ -49,7 +54,9 @@ Future<void> retrieveLists_coding () async{
       archivedList_coding.addAll(_archivedList);
     }
   }else {
-    print("archivedList_coding not in memory");
+    if (kDebugMode) {
+      print("archivedList_coding not in memory");
+    }
   }
 
   if (prefs.containsKey('datesList_coding')) {
@@ -61,7 +68,9 @@ Future<void> retrieveLists_coding () async{
       datesList_coding = _datesList;
     }
   }else {
-    print("datesList_coding not in memory");
+    if (kDebugMode) {
+      print("datesList_coding not in memory");
+    }
   }
 }
 
@@ -85,12 +94,14 @@ Future<void> saveFile_coding(String rootPath) async {
 
   File file_tasksList =  File(filePaths[0]);
   String string = "";
-  print("tasklist: $tasksList_coding  length: ${tasksList_coding.length}");
+  if (kDebugMode) {
+    print("tasklist: $tasksList_coding  length: ${tasksList_coding.length}");
+  }
   for (int index = 0; index < tasksList_coding.length; index++) {
     if (index < tasksList_coding.length - 1) {
-      string += "${tasksList_coding[index]}\n";
+      string += "${tasksList_coding[index]}<||>";
     } else {
-      string += "${tasksList_coding[index]}";
+      string += tasksList_coding[index];
     }
   }
   await file_tasksList.writeAsString(string);
@@ -99,9 +110,9 @@ Future<void> saveFile_coding(String rootPath) async {
   string = "";
   for (int index = 0; index < archivedList_coding.length; index++) {
     if (index < archivedList_coding.length - 1) {
-      string += "${archivedList_coding[index]}\n";
+      string += "${archivedList_coding[index]}<||>";
     } else {
-      string += "${archivedList_coding[index]}";
+      string += archivedList_coding[index];
     }
   }
   await file_archivedList.writeAsString(string);
@@ -110,14 +121,16 @@ Future<void> saveFile_coding(String rootPath) async {
   string = "";
   for (int index = 0; index < datesList_coding.length; index++) {
     if (index < datesList_coding.length - 1) {
-      string += "${datesList_coding[index]}\n";
+      string += "${datesList_coding[index]}<||>";
     } else {
-      string += "${datesList_coding[index]}";
+      string += datesList_coding[index];
     }
   }
   await file_datesList.writeAsString(string);
 
-  print("Lists Saved");
+  if (kDebugMode) {
+    print("Lists Saved");
+  }
 }
 
 Future<void> readFile_coding(String rootPath) async {
@@ -127,30 +140,36 @@ Future<void> readFile_coding(String rootPath) async {
     File file_tasksList = File(filePaths[0]);
     String fileContent_tasksList = await file_tasksList.readAsString();
     if (fileContent_tasksList != "") {
-      tasksList_coding = await fileContent_tasksList.split('\n');
+      tasksList_coding = fileContent_tasksList.split('<||>');
     }
   } else {
-    print("File 'tasksList' don't exists");
+    if (kDebugMode) {
+      print("File 'tasksList' don't exists");
+    }
   }
 
   if (await File(filePaths[1]).exists()) {
     File file_archivedList = File(filePaths[1]);
     String fileContent_archivedList = await file_archivedList.readAsString();
     if (fileContent_archivedList != "") {
-      archivedList_coding = await fileContent_archivedList.split('\n');
+      archivedList_coding = fileContent_archivedList.split('<||>');
     }
   } else {
-    print("File 'archivedList' don't exists");
+    if (kDebugMode) {
+      print("File 'archivedList' don't exists");
+    }
   }
 
   if (await File(filePaths[2]).exists()) {
     File file_datesList = File(filePaths[2]);
     String fileContent_datesList = await file_datesList.readAsString();
     if (fileContent_datesList != "") {
-      datesList_coding = await fileContent_datesList.split('\n');
+      datesList_coding = fileContent_datesList.split('<||>');
     }
   } else {
-    print("File 'datesList' don't exists");
+    if (kDebugMode) {
+      print("File 'datesList' don't exists");
+    }
   }
 
   saveLists_coding();

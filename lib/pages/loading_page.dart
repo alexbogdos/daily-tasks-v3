@@ -4,6 +4,7 @@ import 'package:daily_tasks_v3/pages/coding.dart';
 import 'package:daily_tasks_v3/pages/economics.dart';
 import 'package:daily_tasks_v3/pages/greek.dart';
 import 'package:daily_tasks_v3/pages/personal.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,6 +20,7 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   double value = 0;
 
+  @override
   void initState() {
     super.initState();
     indicateProgress();
@@ -28,10 +30,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffE9C46A),
+      backgroundColor: const Color(0xffE9C46A),
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -49,8 +51,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
                     fontWeight: FontWeight.w500,
                     color: Colors.white),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
+              const Padding(
+                padding: EdgeInsets.symmetric(
                     horizontal: 24.0, vertical: 14.0),
                 child: LinearProgressIndicator(
                   backgroundColor: Colors.black26,
@@ -72,13 +74,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
     await retrieveLists_greek();
     await retrieveLists_coding();
 
-    print("Data Retrieved");
+    if (kDebugMode) {
+      print("Data Retrieved");
+    }
   }
 
   void indicateProgress() {
-    new Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (timer.isActive) {
-        print('DISPOSE');
+        if (kDebugMode) {
+          print('DISPOSE');
+        }
         timer.cancel();
         return;
       } else {
@@ -95,6 +101,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   _goToHomePage() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => MainPage()));
+        context, MaterialPageRoute(builder: (context) => const MainPage()));
   }
 }

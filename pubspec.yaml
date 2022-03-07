@@ -17,10 +17,11 @@ dependencies:
   fluttertoast: ^8.0.9
   file_picker_cross: ^4.5.0
   path_provider: ^2.0.9
+  permission_handler: ^9.2.0
 
 
 dev_dependencies:
-
+  flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
 

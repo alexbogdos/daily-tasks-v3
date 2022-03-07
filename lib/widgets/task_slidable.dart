@@ -1,4 +1,7 @@
-import 'package:daily_tasks_v3/widgets/editTask_dialog.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_interpolations
+
+import 'package:daily_tasks_v3/widgets/edittask_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,8 +36,10 @@ class TaskSlidable extends StatefulWidget {
 
 class _TaskSlidableState extends State<TaskSlidable> {
   void archive(BuildContext context) {
-    print(
+    if (kDebugMode) {
+      print(
         "archive task:\n  index: ${widget.index}\n  string: '${widget.text}'");
+    }
 
     widget.notifyParent(_archiveNotify);
   }
@@ -50,7 +55,9 @@ class _TaskSlidableState extends State<TaskSlidable> {
   }
 
   void edit(BuildContext context) {
-    print("edit task:\n  index: ${widget.index}\n  string: '${widget.text}'");
+    if (kDebugMode) {
+      print("edit task:\n  index: ${widget.index}\n  string: '${widget.text}'");
+    }
 
     EditTaskDialog(
       context: context,
@@ -61,7 +68,7 @@ class _TaskSlidableState extends State<TaskSlidable> {
       notifyParent: () {
         setState(() {});
       },
-    ).Show().then((value) => widget.notifyParent(widget.saveLists));
+    ).show().then((value) => widget.notifyParent(widget.saveLists));
   }
 
   @override
@@ -86,7 +93,7 @@ class _TaskSlidableState extends State<TaskSlidable> {
 
       // The end action pane is the one at the right or the bottom side.
       endActionPane: ActionPane(
-        motion: ScrollMotion(),
+        motion: const ScrollMotion(),
         children: [
           SlidableAction(
             onPressed: edit,
@@ -102,10 +109,10 @@ class _TaskSlidableState extends State<TaskSlidable> {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0),
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: Container(
               width: double.infinity,
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 minHeight: 44, //minimum height
               ),
               decoration: BoxDecoration(
@@ -134,7 +141,7 @@ class _TaskSlidableState extends State<TaskSlidable> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           )
         ],

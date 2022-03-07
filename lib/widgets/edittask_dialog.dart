@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,12 +22,12 @@ class EditTaskDialog {
     required this.notifyParent,
   });
 
-  Future<void> Show() async {
-    this.text = this.tasksList[this.index];
+  Future<void> show() async {
+    text = tasksList[index];
     String editedText = text;
 
     return await showDialog(
-      context: this.context,
+      context: context,
       builder: (context) {
         return Dialog(
           backgroundColor: Colors.white,
@@ -38,8 +40,8 @@ class EditTaskDialog {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: this.colors,
-                stops: [0.0, 1.0],
+                colors: colors,
+                stops: const [0.0, 1.0],
               ),
               borderRadius: BorderRadius.circular(30.0),
             ),
@@ -61,7 +63,7 @@ class EditTaskDialog {
                     validator: (value) {
                       return value!.isNotEmpty ? null : "Invalid Field";
                     },
-                    initialValue: this.text == 'New task' ? '' : '${this.text}',
+                    initialValue: text == 'New task' ? '' : '$text',
                     onChanged: (value) {
                       editedText = value;
                     },
@@ -74,7 +76,7 @@ class EditTaskDialog {
                     decoration: InputDecoration(
                         enabledBorder: unfocusedBorder(),
                         focusedBorder: focusedBorder(),
-                        fillColor: this.colors[0].withOpacity(0.2),
+                        fillColor: colors[0].withOpacity(0.2),
                         filled: true),
                   ),
                 ),
@@ -82,17 +84,17 @@ class EditTaskDialog {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    if (this.isNew)
+                    if (isNew)
                       ElevatedButton(
                         onPressed: () {
-                          this.tasksList.removeAt(this.index);
+                          tasksList.removeAt(index);
                           Navigator.of(context).pop();
-                          this.notifyParent();
+                          notifyParent();
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.white,
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(12.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
                         child: Padding(
@@ -115,8 +117,8 @@ class EditTaskDialog {
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.white,
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(12.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
                         child: Padding(
@@ -134,14 +136,14 @@ class EditTaskDialog {
                       ),
                     ElevatedButton(
                       onPressed: () {
-                        this.tasksList[this.index] = editedText;
+                        tasksList[index] = editedText;
                         Navigator.of(context).pop();
-                        this.notifyParent();
+                        notifyParent();
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(12.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
                       child: Padding(
@@ -171,9 +173,9 @@ class EditTaskDialog {
     //return type is OutlineInputBorder
     return OutlineInputBorder(
         //Outline border type for Text Field
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
         borderSide: BorderSide(
-          color: this.colors[0],
+          color: colors[0],
           width: 3,
         ));
   }
@@ -182,9 +184,9 @@ class EditTaskDialog {
     //return type is OutlineInputBorder
     return OutlineInputBorder(
         //Outline border type for Text Field
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
         borderSide: BorderSide(
-          color: this.colors[1],
+          color: colors[1],
           width: 3,
         ));
   }
@@ -214,9 +216,9 @@ class EditTaskDialog {
             actions: [
               TextButton(
                 onPressed: () {
-                  this.tasksList.removeAt(this.index);
+                  tasksList.removeAt(index);
                   Navigator.of(context).pop();
-                  this.notifyParent();
+                  notifyParent();
                   Navigator.of(context).pop();
                 },
                 style: TextButton.styleFrom(primary: Colors.redAccent),

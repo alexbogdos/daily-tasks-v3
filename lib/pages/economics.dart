@@ -1,12 +1,15 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:io';
 
 import 'package:daily_tasks_v3/templates/tasks_page_template.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-TasksPage PageEconomics = TasksPage(
+TasksPage pageEconomics = TasksPage(
   title: "Economics",
-  backgroundColors: [Color(0xffBDB2FF), Color(0xffFFFFFC)],
+  backgroundColors: const [Color(0xffBDB2FF), Color(0xffFFFFFC)],
   tasksList: tasksList_economics,
   archivedList: archivedList_economics,
   datesList: datesList_economics,
@@ -38,7 +41,9 @@ Future<void> retrieveLists_economics () async{
       tasksList_economics = _tasksList;
     }
   }else {
-    print("tasksList_economics not in memory");
+    if (kDebugMode) {
+      print("tasksList_economics not in memory");
+    }
   }
 
   if (prefs.containsKey('archivedList_economics')) {
@@ -49,7 +54,9 @@ Future<void> retrieveLists_economics () async{
       archivedList_economics.addAll(_archivedList);
     }
   }else {
-    print("archivedList_economics not in memory");
+    if (kDebugMode) {
+      print("archivedList_economics not in memory");
+    }
   }
 
   if (prefs.containsKey('datesList_economics')) {
@@ -61,7 +68,9 @@ Future<void> retrieveLists_economics () async{
       datesList_economics = _datesList;
     }
   }else {
-    print("datesList_economics not in memory");
+    if (kDebugMode) {
+      print("datesList_economics not in memory");
+    }
   }
 }
 
@@ -72,84 +81,94 @@ Future<List<String>> getFilePath(String rootPath) async {
     Directory("$rootPath/$name").createSync(recursive: true);
   }
 
-  String filePath_tasksList = '$rootPath/$name/tasksList.txt';
-  String filePath_archivedList = '$rootPath/$name/archivedList.txt';
-  String filePath_datesList = '$rootPath/$name/datesList.txt';
+  String filePathTasksList = '$rootPath/$name/tasksList.txt';
+  String filePathArchivedList = '$rootPath/$name/archivedList.txt';
+  String filePathDatesList = '$rootPath/$name/datesList.txt';
 
-  return [filePath_tasksList, filePath_archivedList, filePath_datesList];
+  return [filePathTasksList, filePathArchivedList, filePathDatesList];
 }
 
 Future<void> saveFile_economics(String rootPath) async {
   List<String> filePaths = await getFilePath(rootPath);
 
-  File file_tasksList =  File(filePaths[0]);
+  File fileTasksList =  File(filePaths[0]);
   String string = "";
-  print("tasklist: $tasksList_economics  length: ${tasksList_economics.length}");
+  if (kDebugMode) {
+    print("tasklist: $tasksList_economics  length: ${tasksList_economics.length}");
+  }
   for (int index = 0; index < tasksList_economics.length; index++) {
     if (index < tasksList_economics.length - 1) {
-      string += "${tasksList_economics[index]}\n";
+      string += "${tasksList_economics[index]}<||>";
     } else {
-      string += "${tasksList_economics[index]}";
+      string += tasksList_economics[index];
     }
   }
-  await file_tasksList.writeAsString(string);
+  await fileTasksList.writeAsString(string);
 
-  File file_archivedList = File(filePaths[1]);
+  File fileArchivedList = File(filePaths[1]);
   string = "";
   for (int index = 0; index < archivedList_economics.length; index++) {
     if (index < archivedList_economics.length - 1) {
-      string += "${archivedList_economics[index]}\n";
+      string += "${archivedList_economics[index]}<||>";
     } else {
-      string += "${archivedList_economics[index]}";
+      string += archivedList_economics[index];
     }
   }
-  await file_archivedList.writeAsString(string);
+  await fileArchivedList.writeAsString(string);
 
-  File file_datesList = File(filePaths[2]);
+  File fileDatesList = File(filePaths[2]);
   string = "";
   for (int index = 0; index < datesList_economics.length; index++) {
     if (index < datesList_economics.length - 1) {
-      string += "${datesList_economics[index]}\n";
+      string += "${datesList_economics[index]}<||>";
     } else {
-      string += "${datesList_economics[index]}";
+      string += datesList_economics[index];
     }
   }
-  await file_datesList.writeAsString(string);
+  await fileDatesList.writeAsString(string);
 
-  print("Lists Saved");
+  if (kDebugMode) {
+    print("Lists Saved");
+  }
 }
 
 Future<void> readFile_economics(String rootPath) async {
   List<String> filePaths = await getFilePath(rootPath);
 
   if (await File(filePaths[0]).exists()) {
-    File file_tasksList = File(filePaths[0]);
-    String fileContent_tasksList = await file_tasksList.readAsString();
-    if (fileContent_tasksList != "") {
-      tasksList_economics = await fileContent_tasksList.split('\n');
+    File fileTasksList = File(filePaths[0]);
+    String fileContentTasksList = await fileTasksList.readAsString();
+    if (fileContentTasksList != "") {
+      tasksList_economics = fileContentTasksList.split('<||>');
     }
   } else {
-    print("File 'tasksList' don't exists");
+    if (kDebugMode) {
+      print("File 'tasksList' don't exists");
+    }
   }
 
   if (await File(filePaths[1]).exists()) {
-    File file_archivedList = File(filePaths[1]);
-    String fileContent_archivedList = await file_archivedList.readAsString();
-    if (fileContent_archivedList != "") {
-      archivedList_economics = await fileContent_archivedList.split('\n');
+    File fileArchivedList = File(filePaths[1]);
+    String fileContentArchivedList = await fileArchivedList.readAsString();
+    if (fileContentArchivedList != "") {
+      archivedList_economics = fileContentArchivedList.split('<||>');
     }
   } else {
-    print("File 'archivedList' don't exists");
+    if (kDebugMode) {
+      print("File 'archivedList' don't exists");
+    }
   }
 
   if (await File(filePaths[2]).exists()) {
-    File file_datesList = File(filePaths[2]);
-    String fileContent_datesList = await file_datesList.readAsString();
-    if (fileContent_datesList != "") {
-      datesList_economics = await fileContent_datesList.split('\n');
+    File fileDatesList = File(filePaths[2]);
+    String fileContentDatesList = await fileDatesList.readAsString();
+    if (fileContentDatesList != "") {
+      datesList_economics = fileContentDatesList.split('<||>');
     }
   } else {
-    print("File 'datesList' don't exists");
+    if (kDebugMode) {
+      print("File 'datesList' don't exists");
+    }
   }
 
   saveLists_economics();

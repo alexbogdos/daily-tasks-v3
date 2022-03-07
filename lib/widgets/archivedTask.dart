@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,10 +24,10 @@ class ArchivedTask extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
           child: Container(
             width: double.infinity,
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minHeight: 44, //minimum height
             ),
             decoration: BoxDecoration(
@@ -38,12 +40,12 @@ class ArchivedTask extends StatelessWidget {
               child: Column(
                 children: [
                   Align(
-                    alignment: this.text.contains(r'$center')
+                    alignment: text.contains(r'$center')
                         ? Alignment.center
                         : Alignment.centerLeft,
                     child: Text(
-                      "${parseText(this.text)}",
-                      textAlign: this.text.contains(r'$center')
+                      parseText(text),
+                      textAlign: text.contains(r'$center')
                           ? TextAlign.center
                           : TextAlign.start,
                       style: GoogleFonts.zenMaruGothic(
@@ -69,7 +71,7 @@ class ArchivedTask extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         )
       ],
