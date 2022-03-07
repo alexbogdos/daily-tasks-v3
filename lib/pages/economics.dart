@@ -36,8 +36,7 @@ Future<void> retrieveLists_economics () async{
 
   if (prefs.containsKey('tasksList_economics')) {
     final List<String>? _tasksList = prefs.getStringList('tasksList_economics');
-    if (_tasksList == null) {
-    }else{
+    if (_tasksList != null) {
       tasksList_economics = _tasksList;
     }
   }else {
@@ -48,9 +47,7 @@ Future<void> retrieveLists_economics () async{
 
   if (prefs.containsKey('archivedList_economics')) {
     final List<String>? _archivedList = prefs.getStringList('archivedList_economics');
-    if (_archivedList == null) {
-      archivedList_economics = [];
-    }else{
+    if (_archivedList != null) {
       archivedList_economics.addAll(_archivedList);
     }
   }else {
@@ -61,10 +58,7 @@ Future<void> retrieveLists_economics () async{
 
   if (prefs.containsKey('datesList_economics')) {
     final List<String>? _datesList = prefs.getStringList('datesList_economics');
-    if (_datesList == null) {
-      datesList_economics = [];
-    }
-    else{
+    if (_datesList != null) {
       datesList_economics = _datesList;
     }
   }else {

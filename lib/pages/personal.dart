@@ -40,8 +40,7 @@ Future<void> retrieveLists_personal() async {
 
   if (prefs.containsKey('tasksList_personal')) {
     final List<String>? _tasksList = prefs.getStringList('tasksList_personal');
-    if (_tasksList == null) {
-    } else {
+    if (_tasksList != null) {
       tasksList_personal = _tasksList;
     }
   } else {
@@ -53,9 +52,7 @@ Future<void> retrieveLists_personal() async {
   if (prefs.containsKey('archivedList_personal')) {
     final List<String>? _archivedList =
         prefs.getStringList('archivedList_personal');
-    if (_archivedList == null) {
-      archivedList_personal = [];
-    } else {
+    if (_archivedList != null) {
       archivedList_personal.addAll(_archivedList);
     }
   } else {
@@ -66,9 +63,7 @@ Future<void> retrieveLists_personal() async {
 
   if (prefs.containsKey('datesList_personal')) {
     final List<String>? _datesList = prefs.getStringList('datesList_personal');
-    if (_datesList == null) {
-      datesList_personal = [];
-    } else {
+    if (_datesList != null) {
       datesList_personal = _datesList;
     }
   } else {

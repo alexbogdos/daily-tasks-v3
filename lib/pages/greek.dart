@@ -36,8 +36,7 @@ Future<void> retrieveLists_greek () async{
 
   if (prefs.containsKey('tasksList_greek')) {
     final List<String>? _tasksList = prefs.getStringList('tasksList_greek');
-    if (_tasksList == null) {
-    }else{
+    if (_tasksList != null) {
       tasksList_greek = _tasksList;
     }
   }else {
@@ -48,9 +47,7 @@ Future<void> retrieveLists_greek () async{
 
   if (prefs.containsKey('archivedList_greek')) {
     final List<String>? _archivedList = prefs.getStringList('archivedList_greek');
-    if (_archivedList == null) {
-      archivedList_greek = [];
-    }else{
+    if (_archivedList != null) {
       archivedList_greek.addAll(_archivedList);
     }
   }else {
@@ -61,10 +58,7 @@ Future<void> retrieveLists_greek () async{
 
   if (prefs.containsKey('datesList_greek')) {
     final List<String>? _datesList = prefs.getStringList('datesList_greek');
-    if (_datesList == null) {
-      datesList_greek = [];
-    }
-    else{
+    if (_datesList != null) {
       datesList_greek = _datesList;
     }
   }else {

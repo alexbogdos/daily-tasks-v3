@@ -177,16 +177,11 @@ class _PageSettingsState extends State<PageSettings> {
   void showToastMessage(String message) {
     Fluttertoast.showToast(
         msg: message,
-        //message to show toast
         toastLength: Toast.LENGTH_SHORT,
-        //duration for message to show
         gravity: ToastGravity.TOP,
-        //where you want to show, top, bottom
         backgroundColor: Colors.black54,
-        //background Color for message
         textColor: Colors.white,
-        //message text color
-        fontSize: 16.0 //message font size
+        fontSize: 16.0
         );
   }
 

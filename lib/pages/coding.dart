@@ -36,8 +36,7 @@ Future<void> retrieveLists_coding () async{
 
   if (prefs.containsKey('tasksList_coding')) {
     final List<String>? _tasksList = prefs.getStringList('tasksList_coding');
-    if (_tasksList == null) {
-    }else{
+    if (_tasksList != null) {
       tasksList_coding = _tasksList;
     }
   }else {
@@ -48,9 +47,7 @@ Future<void> retrieveLists_coding () async{
 
   if (prefs.containsKey('archivedList_coding')) {
     final List<String>? _archivedList = prefs.getStringList('archivedList_coding');
-    if (_archivedList == null) {
-      archivedList_coding = [];
-    }else{
+    if (_archivedList != null) {
       archivedList_coding.addAll(_archivedList);
     }
   }else {
@@ -61,10 +58,7 @@ Future<void> retrieveLists_coding () async{
 
   if (prefs.containsKey('datesList_coding')) {
     final List<String>? _datesList = prefs.getStringList('datesList_coding');
-    if (_datesList == null) {
-      datesList_coding = [];
-    }
-    else{
+    if (_datesList != null) {
       datesList_coding = _datesList;
     }
   }else {
