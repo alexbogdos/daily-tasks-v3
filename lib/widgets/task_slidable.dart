@@ -133,74 +133,74 @@ class _TaskSlidableState extends State<TaskSlidable> {
       ),
     );
   }
+}
 
-  Widget parseText(String text) {
-    // text = text.replaceAll(r'$center', '');
-    text = text.replaceAll(
-        "\$line", '-------------------------------------------');
+Widget parseText(String text) {
+  // text = text.replaceAll(r'$center', '');
+  text =
+      text.replaceAll("\$line", '-------------------------------------------');
 
-    if (!text.contains(r'$title')) {
-      return Align(
-        alignment:
-            text.contains(r'$center') ? Alignment.center : Alignment.centerLeft,
-        child: Text(
-          "$text",
-          textAlign:
-              text.contains(r'$center') ? TextAlign.center : TextAlign.start,
-          style: GoogleFonts.zenMaruGothic(
-            color: Colors.black45,
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
+  if (!text.contains(r'$title')) {
+    return Align(
+      alignment:
+          text.contains(r'$center') ? Alignment.center : Alignment.centerLeft,
+      child: Text(
+        "$text",
+        textAlign:
+            text.contains(r'$center') ? TextAlign.center : TextAlign.start,
+        style: GoogleFonts.zenMaruGothic(
+          color: Colors.black45,
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  } else {
+    int index = text.indexOf(r"$title");
+
+    String text1 = text.substring(0, index).trim();
+    String text2 = text
+        .substring(index)
+        .replaceFirst("\n", "")
+        .replaceAll(r"$titleCenter", "")
+        .replaceAll(r"$title", "")
+        .replaceAll(r"$center", "");
+    return Column(
+      children: [
+        Align(
+          alignment: text.contains(r'$titleCenter')
+              ? Alignment.center
+              : Alignment.centerLeft,
+          child: Text(
+            "$text1",
+            textAlign: text.contains(r'$titleCenter')
+                ? TextAlign.center
+                : TextAlign.start,
+            style: GoogleFonts.zenMaruGothic(
+              color: Colors.black45,
+              fontSize: 22,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
-      );
-    } else {
-      int index = text.indexOf(r"$title");
-
-      String text1 = text.substring(0, index);
-      String text2 = text
-          .substring(index)
-          .replaceFirst("\n", "")
-          .replaceAll(r"$titleCenter", "")
-          .replaceAll(r"$title", "")
-          .replaceAll(r"$center", "");
-      return Column(
-        children: [
+        if (text2 != "")
           Align(
-            alignment: text.contains(r'$titleCenter')
+            alignment: text.substring(index).contains(r'$center')
                 ? Alignment.center
                 : Alignment.centerLeft,
             child: Text(
-              "$text1",
-              textAlign: text.contains(r'$titleCenter')
+              "$text2",
+              textAlign: text.substring(index).contains(r'$center')
                   ? TextAlign.center
                   : TextAlign.start,
               style: GoogleFonts.zenMaruGothic(
                 color: Colors.black45,
                 fontSize: 20,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
-          if (text2 != "")
-            Align(
-              alignment: text.substring(index).contains(r'$center')
-                  ? Alignment.center
-                  : Alignment.centerLeft,
-              child: Text(
-                "$text2",
-                textAlign: text.substring(index).contains(r'$center')
-                    ? TextAlign.center
-                    : TextAlign.start,
-                style: GoogleFonts.zenMaruGothic(
-                  color: Colors.black45,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-        ],
-      );
-    }
+      ],
+    );
   }
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, unnecessary_string_interpolations
 
+import 'package:daily_tasks_v3/widgets/task_slidable.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -39,22 +40,7 @@ class ArchivedTask extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
               child: Column(
                 children: [
-                  Align(
-                    alignment: text.contains(r'$center')
-                        ? Alignment.center
-                        : Alignment.centerLeft,
-                    child: Text(
-                      parseText(text),
-                      textAlign: text.contains(r'$center')
-                          ? TextAlign.center
-                          : TextAlign.start,
-                      style: GoogleFonts.zenMaruGothic(
-                        color: Colors.black45,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  parseText(text),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
@@ -76,13 +62,5 @@ class ArchivedTask extends StatelessWidget {
         )
       ],
     );
-  }
-
-  String parseText(String text) {
-    text = text.replaceAll(r'$center', '');
-    text = text.replaceAll(
-        "\$line", '-------------------------------------------');
-
-    return text;
   }
 }
