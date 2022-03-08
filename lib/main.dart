@@ -57,7 +57,8 @@ class _MainPageState extends State<MainPage> {
                     width: MediaQuery.of(context).size.width * 0.74,
                     height: MediaQuery.of(context).size.height * 0.12,
                     child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
                       child: AutoSizeText(
                         'Your\ntopics:',
                         style: GoogleFonts.poppins(

@@ -1,10 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:io';
+
 import 'package:daily_tasks_v3/templates/tasks_page_template.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 TasksPage PagePersonal = TasksPage(
@@ -53,7 +53,7 @@ Future<void> retrieveLists_personal() async {
     final List<String>? _archivedList =
         prefs.getStringList('archivedList_personal');
     if (_archivedList != null) {
-      archivedList_personal.addAll(_archivedList);
+      archivedList_personal = _archivedList;
     }
   } else {
     if (kDebugMode) {
@@ -90,10 +90,11 @@ Future<List<String>> getFilePath(String rootPath) async {
 Future<void> saveFile_personal(String rootPath) async {
   List<String> filePaths = await getFilePath(rootPath);
 
-  File file_tasksList =  File(filePaths[0]);
+  File file_tasksList = File(filePaths[0]);
   String string = "";
   if (kDebugMode) {
-    print("tasklist: $tasksList_personal  length: ${tasksList_personal.length}");
+    print(
+        "tasklist: $tasksList_personal  length: ${tasksList_personal.length}");
   }
   for (int index = 0; index < tasksList_personal.length; index++) {
     if (index < tasksList_personal.length - 1) {
@@ -139,6 +140,8 @@ Future<void> readFile_personal(String rootPath) async {
     String fileContent_tasksList = await file_tasksList.readAsString();
     if (fileContent_tasksList != "") {
       tasksList_personal = fileContent_tasksList.split('<||>');
+    } else {
+      tasksList_personal = [];
     }
   } else {
     if (kDebugMode) {
@@ -151,6 +154,8 @@ Future<void> readFile_personal(String rootPath) async {
     String fileContent_archivedList = await file_archivedList.readAsString();
     if (fileContent_archivedList != "") {
       archivedList_personal = fileContent_archivedList.split('<||>');
+    } else {
+      archivedList_personal = [];
     }
   } else {
     if (kDebugMode) {
@@ -163,6 +168,8 @@ Future<void> readFile_personal(String rootPath) async {
     String fileContent_datesList = await file_datesList.readAsString();
     if (fileContent_datesList != "") {
       datesList_personal = fileContent_datesList.split('<||>');
+    } else {
+      datesList_personal = [];
     }
   } else {
     if (kDebugMode) {

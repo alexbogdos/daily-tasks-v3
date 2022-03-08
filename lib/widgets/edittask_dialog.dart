@@ -34,8 +34,8 @@ class EditTaskDialog {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: 300,
+            width: MediaQuery.of(context).size.width * 0.96,
+            height: 304,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,

@@ -1,14 +1,15 @@
 import 'dart:io' show Platform;
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daily_tasks_v3/pages/coding.dart';
 import 'package:daily_tasks_v3/pages/economics.dart';
 import 'package:daily_tasks_v3/pages/greek.dart';
 import 'package:daily_tasks_v3/pages/mathematics.dart';
 import 'package:daily_tasks_v3/pages/personal.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PageSettings extends StatefulWidget {
@@ -29,7 +30,6 @@ class _PageSettingsState extends State<PageSettings> {
 
   @override
   Widget build(BuildContext context) {
-
     askPermissions();
 
     return Scaffold(
@@ -59,8 +59,8 @@ class _PageSettingsState extends State<PageSettings> {
                           width: MediaQuery.of(context).size.width * 0.74,
                           height: MediaQuery.of(context).size.height * 0.12,
                           child: Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10, 10, 0, 0),
                             child: AutoSizeText(
                               'Settings:',
                               style: GoogleFonts.poppins(
@@ -84,15 +84,19 @@ class _PageSettingsState extends State<PageSettings> {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            _selectFolder().then((value) => saveFiles("$_directoryPath"));
+                            _selectFolder()
+                                .then((value) => saveFiles("$_directoryPath"));
                           },
-                          child: const Text("Save BackUps | Select Root Folder"),
+                          child:
+                              const Text("Save BackUps | Select Root Folder"),
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            _selectFolder().then((value) => loadFiles("$_directoryPath"));
+                            _selectFolder()
+                                .then((value) => loadFiles("$_directoryPath"));
                           },
-                          child: const Text("Retrieve BackUps | Select Root Folder"),
+                          child: const Text(
+                              "Retrieve BackUps | Select Root Folder"),
                         ),
                       ],
                     ),
@@ -145,7 +149,7 @@ class _PageSettingsState extends State<PageSettings> {
       ),
     );
   }
-  
+
   void saveFiles(String path) {
     saveFile_personal(path);
     saveFile_mathematics(path);
@@ -169,8 +173,7 @@ class _PageSettingsState extends State<PageSettings> {
         gravity: ToastGravity.TOP,
         backgroundColor: Colors.black54,
         textColor: Colors.white,
-        fontSize: 16.0
-        );
+        fontSize: 16.0);
   }
 
   void askPermissions() async {
@@ -178,10 +181,10 @@ class _PageSettingsState extends State<PageSettings> {
       return;
     }
 
-    if (!(await Permission.storage.isGranted)){
+    if (!(await Permission.storage.isGranted)) {
       await Permission.storage.request();
     }
-    if (!(await Permission.manageExternalStorage.isGranted)){
+    if (!(await Permission.manageExternalStorage.isGranted)) {
       await Permission.manageExternalStorage.request();
     }
   }

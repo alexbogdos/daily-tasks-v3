@@ -21,7 +21,7 @@ List<String> tasksList_economics = [];
 List<String> archivedList_economics = [];
 List<String> datesList_economics = [];
 
-void saveLists_economics () async{
+void saveLists_economics() async {
   // Obtain shared preferences.
   final prefs = await SharedPreferences.getInstance();
 
@@ -30,7 +30,7 @@ void saveLists_economics () async{
   await prefs.setStringList('datesList_economics', datesList_economics);
 }
 
-Future<void> retrieveLists_economics () async{
+Future<void> retrieveLists_economics() async {
   // Obtain shared preferences.
   final prefs = await SharedPreferences.getInstance();
 
@@ -39,18 +39,19 @@ Future<void> retrieveLists_economics () async{
     if (_tasksList != null) {
       tasksList_economics = _tasksList;
     }
-  }else {
+  } else {
     if (kDebugMode) {
       print("tasksList_economics not in memory");
     }
   }
 
   if (prefs.containsKey('archivedList_economics')) {
-    final List<String>? _archivedList = prefs.getStringList('archivedList_economics');
+    final List<String>? _archivedList =
+        prefs.getStringList('archivedList_economics');
     if (_archivedList != null) {
       archivedList_economics.addAll(_archivedList);
     }
-  }else {
+  } else {
     if (kDebugMode) {
       print("archivedList_economics not in memory");
     }
@@ -61,7 +62,7 @@ Future<void> retrieveLists_economics () async{
     if (_datesList != null) {
       datesList_economics = _datesList;
     }
-  }else {
+  } else {
     if (kDebugMode) {
       print("datesList_economics not in memory");
     }
@@ -85,10 +86,11 @@ Future<List<String>> getFilePath(String rootPath) async {
 Future<void> saveFile_economics(String rootPath) async {
   List<String> filePaths = await getFilePath(rootPath);
 
-  File fileTasksList =  File(filePaths[0]);
+  File fileTasksList = File(filePaths[0]);
   String string = "";
   if (kDebugMode) {
-    print("tasklist: $tasksList_economics  length: ${tasksList_economics.length}");
+    print(
+        "tasklist: $tasksList_economics  length: ${tasksList_economics.length}");
   }
   for (int index = 0; index < tasksList_economics.length; index++) {
     if (index < tasksList_economics.length - 1) {
@@ -130,10 +132,12 @@ Future<void> readFile_economics(String rootPath) async {
   List<String> filePaths = await getFilePath(rootPath);
 
   if (await File(filePaths[0]).exists()) {
-    File fileTasksList = File(filePaths[0]);
-    String fileContentTasksList = await fileTasksList.readAsString();
-    if (fileContentTasksList != "") {
-      tasksList_economics = fileContentTasksList.split('<||>');
+    File file_tasksList = File(filePaths[0]);
+    String fileContent_tasksList = await file_tasksList.readAsString();
+    if (fileContent_tasksList != "") {
+      tasksList_economics = fileContent_tasksList.split('<||>');
+    } else {
+      tasksList_economics = [];
     }
   } else {
     if (kDebugMode) {
@@ -142,10 +146,12 @@ Future<void> readFile_economics(String rootPath) async {
   }
 
   if (await File(filePaths[1]).exists()) {
-    File fileArchivedList = File(filePaths[1]);
-    String fileContentArchivedList = await fileArchivedList.readAsString();
-    if (fileContentArchivedList != "") {
-      archivedList_economics = fileContentArchivedList.split('<||>');
+    File file_archivedList = File(filePaths[1]);
+    String fileContent_archivedList = await file_archivedList.readAsString();
+    if (fileContent_archivedList != "") {
+      archivedList_economics = fileContent_archivedList.split('<||>');
+    } else {
+      archivedList_economics = [];
     }
   } else {
     if (kDebugMode) {
@@ -154,10 +160,12 @@ Future<void> readFile_economics(String rootPath) async {
   }
 
   if (await File(filePaths[2]).exists()) {
-    File fileDatesList = File(filePaths[2]);
-    String fileContentDatesList = await fileDatesList.readAsString();
-    if (fileContentDatesList != "") {
-      datesList_economics = fileContentDatesList.split('<||>');
+    File file_datesList = File(filePaths[2]);
+    String fileContent_datesList = await file_datesList.readAsString();
+    if (fileContent_datesList != "") {
+      datesList_economics = fileContent_datesList.split('<||>');
+    } else {
+      datesList_economics = [];
     }
   } else {
     if (kDebugMode) {

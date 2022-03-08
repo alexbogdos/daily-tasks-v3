@@ -1,7 +1,7 @@
 name: daily_tasks_v3
 description: A simple to-do app to keep your daily tasks in on place. Created using Flutter & Dart.
 
-version: 1.0.0+1
+version: 1.3.0+1
 
 environment:
   sdk: ">=2.15.1 <3.0.0"

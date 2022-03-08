@@ -126,7 +126,8 @@ class _TasksPageState extends State<TasksPage> {
                             Container(
                               width: 40,
                               height: 30,
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               child: Center(
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
@@ -158,7 +159,8 @@ class _TasksPageState extends State<TasksPage> {
                             Container(
                               width: 40,
                               height: 30,
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               child: Center(
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
@@ -185,8 +187,8 @@ class _TasksPageState extends State<TasksPage> {
                       child: TabBarView(
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 10, 5, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                5, 10, 5, 0),
                             child: Stack(
                               alignment: const AlignmentDirectional(0, 1),
                               children: [
@@ -325,8 +327,8 @@ class _TasksPageState extends State<TasksPage> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 0),
                             child: Scrollbar(
                               thickness: 6,
                               interactive: true,

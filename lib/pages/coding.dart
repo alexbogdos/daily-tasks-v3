@@ -21,7 +21,7 @@ List<String> tasksList_coding = [];
 List<String> archivedList_coding = [];
 List<String> datesList_coding = [];
 
-void saveLists_coding () async{
+void saveLists_coding() async {
   // Obtain shared preferences.
   final prefs = await SharedPreferences.getInstance();
 
@@ -30,7 +30,7 @@ void saveLists_coding () async{
   await prefs.setStringList('datesList_coding', datesList_coding);
 }
 
-Future<void> retrieveLists_coding () async{
+Future<void> retrieveLists_coding() async {
   // Obtain shared preferences.
   final prefs = await SharedPreferences.getInstance();
 
@@ -39,18 +39,19 @@ Future<void> retrieveLists_coding () async{
     if (_tasksList != null) {
       tasksList_coding = _tasksList;
     }
-  }else {
+  } else {
     if (kDebugMode) {
       print("tasksList_coding not in memory");
     }
   }
 
   if (prefs.containsKey('archivedList_coding')) {
-    final List<String>? _archivedList = prefs.getStringList('archivedList_coding');
+    final List<String>? _archivedList =
+        prefs.getStringList('archivedList_coding');
     if (_archivedList != null) {
       archivedList_coding.addAll(_archivedList);
     }
-  }else {
+  } else {
     if (kDebugMode) {
       print("archivedList_coding not in memory");
     }
@@ -61,13 +62,12 @@ Future<void> retrieveLists_coding () async{
     if (_datesList != null) {
       datesList_coding = _datesList;
     }
-  }else {
+  } else {
     if (kDebugMode) {
       print("datesList_coding not in memory");
     }
   }
 }
-
 
 Future<List<String>> getFilePath(String rootPath) async {
   String name = "Coding";
@@ -86,7 +86,7 @@ Future<List<String>> getFilePath(String rootPath) async {
 Future<void> saveFile_coding(String rootPath) async {
   List<String> filePaths = await getFilePath(rootPath);
 
-  File file_tasksList =  File(filePaths[0]);
+  File file_tasksList = File(filePaths[0]);
   String string = "";
   if (kDebugMode) {
     print("tasklist: $tasksList_coding  length: ${tasksList_coding.length}");
@@ -135,6 +135,8 @@ Future<void> readFile_coding(String rootPath) async {
     String fileContent_tasksList = await file_tasksList.readAsString();
     if (fileContent_tasksList != "") {
       tasksList_coding = fileContent_tasksList.split('<||>');
+    } else {
+      tasksList_coding = [];
     }
   } else {
     if (kDebugMode) {
@@ -147,6 +149,8 @@ Future<void> readFile_coding(String rootPath) async {
     String fileContent_archivedList = await file_archivedList.readAsString();
     if (fileContent_archivedList != "") {
       archivedList_coding = fileContent_archivedList.split('<||>');
+    } else {
+      archivedList_coding = [];
     }
   } else {
     if (kDebugMode) {
@@ -159,6 +163,8 @@ Future<void> readFile_coding(String rootPath) async {
     String fileContent_datesList = await file_datesList.readAsString();
     if (fileContent_datesList != "") {
       datesList_coding = fileContent_datesList.split('<||>');
+    } else {
+      datesList_coding = [];
     }
   } else {
     if (kDebugMode) {

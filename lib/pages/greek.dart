@@ -21,7 +21,7 @@ List<String> tasksList_greek = [];
 List<String> archivedList_greek = [];
 List<String> datesList_greek = [];
 
-void saveLists_greek () async{
+void saveLists_greek() async {
   // Obtain shared preferences.
   final prefs = await SharedPreferences.getInstance();
 
@@ -30,7 +30,7 @@ void saveLists_greek () async{
   await prefs.setStringList('datesList_greek', datesList_greek);
 }
 
-Future<void> retrieveLists_greek () async{
+Future<void> retrieveLists_greek() async {
   // Obtain shared preferences.
   final prefs = await SharedPreferences.getInstance();
 
@@ -39,18 +39,19 @@ Future<void> retrieveLists_greek () async{
     if (_tasksList != null) {
       tasksList_greek = _tasksList;
     }
-  }else {
+  } else {
     if (kDebugMode) {
       print("tasksList_greek not in memory");
     }
   }
 
   if (prefs.containsKey('archivedList_greek')) {
-    final List<String>? _archivedList = prefs.getStringList('archivedList_greek');
+    final List<String>? _archivedList =
+        prefs.getStringList('archivedList_greek');
     if (_archivedList != null) {
       archivedList_greek.addAll(_archivedList);
     }
-  }else {
+  } else {
     if (kDebugMode) {
       print("archivedList_greek not in memory");
     }
@@ -61,7 +62,7 @@ Future<void> retrieveLists_greek () async{
     if (_datesList != null) {
       datesList_greek = _datesList;
     }
-  }else {
+  } else {
     if (kDebugMode) {
       print("datesList_greek not in memory");
     }
@@ -85,7 +86,7 @@ Future<List<String>> getFilePath(String rootPath) async {
 Future<void> saveFile_greek(String rootPath) async {
   List<String> filePaths = await getFilePath(rootPath);
 
-  File file_tasksList =  File(filePaths[0]);
+  File file_tasksList = File(filePaths[0]);
   String string = "";
   if (kDebugMode) {
     print("tasklist: $tasksList_greek  length: ${tasksList_greek.length}");
@@ -134,6 +135,8 @@ Future<void> readFile_greek(String rootPath) async {
     String fileContent_tasksList = await file_tasksList.readAsString();
     if (fileContent_tasksList != "") {
       tasksList_greek = fileContent_tasksList.split('<||>');
+    } else {
+      tasksList_greek = [];
     }
   } else {
     if (kDebugMode) {
@@ -146,6 +149,8 @@ Future<void> readFile_greek(String rootPath) async {
     String fileContent_archivedList = await file_archivedList.readAsString();
     if (fileContent_archivedList != "") {
       archivedList_greek = fileContent_archivedList.split('<||>');
+    } else {
+      archivedList_greek = [];
     }
   } else {
     if (kDebugMode) {
@@ -158,6 +163,8 @@ Future<void> readFile_greek(String rootPath) async {
     String fileContent_datesList = await file_datesList.readAsString();
     if (fileContent_datesList != "") {
       datesList_greek = fileContent_datesList.split('<||>');
+    } else {
+      datesList_greek = [];
     }
   } else {
     if (kDebugMode) {

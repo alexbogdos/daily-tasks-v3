@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:daily_tasks_v3/main.dart';
 import 'package:daily_tasks_v3/pages/coding.dart';
 import 'package:daily_tasks_v3/pages/economics.dart';
@@ -52,8 +53,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                     color: Colors.white),
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 24.0, vertical: 14.0),
+                padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 14.0),
                 child: LinearProgressIndicator(
                   backgroundColor: Colors.black26,
                   color: Colors.white70,
