@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daily_tasks_v3/pages/coding.dart';
 import 'package:daily_tasks_v3/pages/economics.dart';
@@ -146,17 +145,6 @@ class _PageSettingsState extends State<PageSettings> {
       ),
     );
   }
-
-  String getRandom(){
-    const ch = 'AaBbCcDdEeFf';
-    const num = '0123456789';
-    Random r = Random();
-    String str1 =  String.fromCharCodes(Iterable.generate(
-        2, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
-    String str2 =  String.fromCharCodes(Iterable.generate(
-        2, (_) => num.codeUnitAt(r.nextInt(num.length))));
-    return "$str1$str2";
-  }
   
   void saveFiles(String path) {
     saveFile_personal(path);
@@ -186,6 +174,10 @@ class _PageSettingsState extends State<PageSettings> {
   }
 
   void askPermissions() async {
+    if (!Platform.isAndroid) {
+      return;
+    }
+
     if (!(await Permission.storage.isGranted)){
       await Permission.storage.request();
     }
