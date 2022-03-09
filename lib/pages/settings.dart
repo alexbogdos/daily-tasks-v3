@@ -103,7 +103,7 @@ class _PageSettingsState extends State<PageSettings> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 0),
                               child: AutoSizeText(
-                                "$_directoryPath",
+                                parsePath("$_directoryPath"),
                                 style: GoogleFonts.poppins(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.w400,
@@ -126,6 +126,7 @@ class _PageSettingsState extends State<PageSettings> {
                             _selectFolder()
                                 .then((value) => savePath("$_directoryPath"));
                           },
+                          function2: () {},
                         ),
                         const SizedBox(height: 20),
                         ActionButton(
@@ -135,11 +136,14 @@ class _PageSettingsState extends State<PageSettings> {
                           heightP: 0.08,
                           color: Colors.red.shade400,
                           function: () {
-                            if (_directoryPath == null) {
+                            if (_directoryPath == "") {
                               _selectFolder().then((value) => openAndSave());
                             } else {
                               saveFiles("$_directoryPath");
                             }
+                          },
+                          function2: () {
+                            _selectFolder().then((value) => openAndSave());
                           },
                         ),
                         const SizedBox(height: 20),
@@ -150,11 +154,14 @@ class _PageSettingsState extends State<PageSettings> {
                           heightP: 0.08,
                           color: Colors.grey.shade700,
                           function: () {
-                            if (_directoryPath == null) {
+                            if (_directoryPath == "") {
                               _selectFolder().then((value) => openAndLoad());
                             } else {
                               loadFiles("$_directoryPath");
                             }
+                          },
+                          function2: () {
+                            _selectFolder().then((value) => openAndLoad());
                           },
                         ),
                       ],
@@ -209,12 +216,32 @@ class _PageSettingsState extends State<PageSettings> {
     );
   }
 
-  void saveFiles(String path) {
-    saveFile_personal(path);
-    saveFile_mathematics(path);
-    saveFile_greek(path);
-    saveFile_economics(path);
-    saveFile_coding(path);
+  String parsePath(String pathText) {
+    if (Platform.isAndroid) {
+      pathText = pathText.replaceFirst(r"/", "");
+      int index1 = pathText.indexOf(r"/");
+      pathText = pathText.substring(index1 + 1);
+      int index2 = pathText.indexOf(r"/");
+      if (pathText.substring(0, index2) != "emulated") {
+        pathText = pathText.replaceRange(0, index2, "sd");
+      }
+      return "../$pathText";
+    }
+    return pathText;
+  }
+
+
+  void saveFiles(String path) async {
+    if (await Directory(path).exists()) {
+      saveFile_personal(path);
+      saveFile_mathematics(path);
+      saveFile_greek(path);
+      saveFile_economics(path);
+      saveFile_coding(path);
+      showToastMessage("Backup Made");
+    } else {
+      showToastMessage("PATH DOES NOT EXIST");
+    }
   }
 
   void loadFiles(String path) async {
@@ -224,6 +251,7 @@ class _PageSettingsState extends State<PageSettings> {
       readFile_greek(path);
       readFile_economics(path);
       readFile_coding(path);
+      showToastMessage("Backup Restored");
     } else {
       showToastMessage("PATH DOES NOT EXIST");
     }
@@ -232,7 +260,7 @@ class _PageSettingsState extends State<PageSettings> {
   void openAndSave() {
     saveFiles("$_directoryPath");
     savePath("$_directoryPath");
-    showToastMessage("Files Backed up");
+    showToastMessage("Backup Made");
   }
 
   void openAndLoad() {
@@ -243,12 +271,13 @@ class _PageSettingsState extends State<PageSettings> {
 
   void showToastMessage(String message) {
     Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 16.0);
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.TOP,
+      backgroundColor: Colors.black54,
+      textColor: Colors.white,
+      fontSize: 18.0,
+    );
   }
 
   void askPermissions() async {
@@ -272,7 +301,7 @@ void savePath(String path) async {
   }
 }
 
-void loadPath() async {
+Future<void> loadPath() async {
   final prefs = await SharedPreferences.getInstance();
   if (prefs.containsKey("backupPath")) {
     _directoryPath = prefs.getString("backupPath");

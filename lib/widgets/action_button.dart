@@ -15,6 +15,7 @@ class ActionButton extends StatelessWidget {
   final double heightP;
   final Color color;
   final function;
+  final function2;
 
   const ActionButton(
       {required this.context,
@@ -23,6 +24,7 @@ class ActionButton extends StatelessWidget {
         required this.heightP,
         required this.color,
         required this.function,
+        required this.function2,
         Key? key})
       : super(key: key);
 
@@ -49,6 +51,7 @@ class ActionButton extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: function,
+            onLongPress: function2,
             highlightColor: Colors.white12,
             splashColor: Colors.white12,
             child: FittedBox(
@@ -57,7 +60,7 @@ class ActionButton extends StatelessWidget {
                 child: AutoSizeText(
                   "${title}",
                   style: GoogleFonts.poppins(
-                    fontSize: 16.0,
+                    fontSize: 18.0,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),

@@ -69,12 +69,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   Future<void> retrieveData() async {
-    retrieveLists_personal();
-    retrieveLists_mathematics();
-    retrieveLists_economics();
-    retrieveLists_greek();
-    retrieveLists_coding();
-    loadPath();
+    await retrieveLists_personal();
+    await retrieveLists_mathematics();
+    await retrieveLists_economics();
+    await retrieveLists_greek();
+    await retrieveLists_coding();
+    await loadPath();
 
     if (kDebugMode) {
       print("Data Retrieved");
