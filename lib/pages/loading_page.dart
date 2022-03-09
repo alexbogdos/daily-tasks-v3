@@ -5,6 +5,7 @@ import 'package:daily_tasks_v3/pages/coding.dart';
 import 'package:daily_tasks_v3/pages/economics.dart';
 import 'package:daily_tasks_v3/pages/greek.dart';
 import 'package:daily_tasks_v3/pages/personal.dart';
+import 'package:daily_tasks_v3/pages/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -68,11 +69,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   Future<void> retrieveData() async {
-    await retrieveLists_personal();
-    await retrieveLists_mathematics();
-    await retrieveLists_economics();
-    await retrieveLists_greek();
-    await retrieveLists_coding();
+    retrieveLists_personal();
+    retrieveLists_mathematics();
+    retrieveLists_economics();
+    retrieveLists_greek();
+    retrieveLists_coding();
+    loadPath();
 
     if (kDebugMode) {
       print("Data Retrieved");

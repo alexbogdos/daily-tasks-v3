@@ -1,4 +1,4 @@
-import 'dart:io' show Platform;
+import 'dart:io' show Directory, Platform;
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daily_tasks_v3/pages/coding.dart';
@@ -6,11 +6,15 @@ import 'package:daily_tasks_v3/pages/economics.dart';
 import 'package:daily_tasks_v3/pages/greek.dart';
 import 'package:daily_tasks_v3/pages/mathematics.dart';
 import 'package:daily_tasks_v3/pages/personal.dart';
+import 'package:daily_tasks_v3/widgets/action_button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+String? _directoryPath = "";
 
 class PageSettings extends StatefulWidget {
   const PageSettings({Key? key}) : super(key: key);
@@ -20,11 +24,11 @@ class PageSettings extends StatefulWidget {
 }
 
 class _PageSettingsState extends State<PageSettings> {
-  String? _directoryPath;
-
   Future<void> _selectFolder() async {
     await FilePicker.platform.getDirectoryPath().then((value) {
-      setState(() => _directoryPath = value);
+      if (!(value == null && _directoryPath != null)) {
+        setState(() => _directoryPath = value);
+      }
     });
   }
 
@@ -80,23 +84,78 @@ class _PageSettingsState extends State<PageSettings> {
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.12,
+                          height: MediaQuery.of(context).size.height * 0.06,
                         ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            _selectFolder()
-                                .then((value) => saveFiles("$_directoryPath"));
-                          },
-                          child:
-                              const Text("Save BackUps | Select Root Folder"),
+                        Center(
+                          child: AutoSizeText(
+                            "Selected Path:",
+                            style: GoogleFonts.poppins(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white.withOpacity(0.9),
+                            ),
+                          ),
                         ),
-                        ElevatedButton(
-                          onPressed: () async {
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 0),
+                              child: AutoSizeText(
+                                "$_directoryPath",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white.withOpacity(0.8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                        ),
+                        ActionButton(
+                          context: context,
+                          title: "Select Backup Folder",
+                          widthP: 0.6,
+                          heightP: 0.08,
+                          color: Colors.blueGrey.shade300,
+                          function: () {
                             _selectFolder()
-                                .then((value) => loadFiles("$_directoryPath"));
+                                .then((value) => savePath("$_directoryPath"));
                           },
-                          child: const Text(
-                              "Retrieve BackUps | Select Root Folder"),
+                        ),
+                        const SizedBox(height: 20),
+                        ActionButton(
+                          context: context,
+                          title: "Save Backup",
+                          widthP: 0.6,
+                          heightP: 0.08,
+                          color: Colors.red.shade400,
+                          function: () {
+                            if (_directoryPath == null) {
+                              _selectFolder().then((value) => openAndSave());
+                            } else {
+                              saveFiles("$_directoryPath");
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        ActionButton(
+                          context: context,
+                          title: "Load Backup",
+                          widthP: 0.6,
+                          heightP: 0.08,
+                          color: Colors.grey.shade700,
+                          function: () {
+                            if (_directoryPath == null) {
+                              _selectFolder().then((value) => openAndLoad());
+                            } else {
+                              loadFiles("$_directoryPath");
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -158,12 +217,28 @@ class _PageSettingsState extends State<PageSettings> {
     saveFile_coding(path);
   }
 
-  void loadFiles(String path) {
-    readFile_personal(path);
-    readFile_mathematics(path);
-    readFile_greek(path);
-    readFile_economics(path);
-    readFile_coding(path);
+  void loadFiles(String path) async {
+    if (await Directory(path).exists()) {
+      readFile_personal(path);
+      readFile_mathematics(path);
+      readFile_greek(path);
+      readFile_economics(path);
+      readFile_coding(path);
+    } else {
+      showToastMessage("PATH DOES NOT EXIST");
+    }
+  }
+
+  void openAndSave() {
+    saveFiles("$_directoryPath");
+    savePath("$_directoryPath");
+    showToastMessage("Files Backed up");
+  }
+
+  void openAndLoad() {
+    loadFiles("$_directoryPath");
+    savePath("$_directoryPath");
+    showToastMessage("Backup Restored");
   }
 
   void showToastMessage(String message) {
@@ -187,5 +262,19 @@ class _PageSettingsState extends State<PageSettings> {
     if (!(await Permission.manageExternalStorage.isGranted)) {
       await Permission.manageExternalStorage.request();
     }
+  }
+}
+
+void savePath(String path) async {
+  if (path != "") {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("backupPath", path);
+  }
+}
+
+void loadPath() async {
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.containsKey("backupPath")) {
+    _directoryPath = prefs.getString("backupPath");
   }
 }
