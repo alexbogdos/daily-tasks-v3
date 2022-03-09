@@ -217,6 +217,9 @@ class _PageSettingsState extends State<PageSettings> {
   }
 
   String parsePath(String pathText) {
+    if (pathText == "") {
+      return pathText;
+    }
     if (Platform.isAndroid) {
       pathText = pathText.replaceFirst(r"/", "");
       int index1 = pathText.indexOf(r"/");
