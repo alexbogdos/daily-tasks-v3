@@ -273,6 +273,10 @@ class _PageSettingsState extends State<PageSettings> {
   }
 
   void showToastMessage(String message) {
+    if (!Platform.isAndroid) {
+      return;
+    }
+
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_LONG,
