@@ -131,7 +131,7 @@ class _PageSettingsState extends State<PageSettings> {
                         const SizedBox(height: 20),
                         ActionButton(
                           context: context,
-                          title: "Save Backup",
+                          title: "Create Backup",
                           widthP: 0.6,
                           heightP: 0.08,
                           color: Colors.red.shade400,
@@ -149,7 +149,7 @@ class _PageSettingsState extends State<PageSettings> {
                         const SizedBox(height: 20),
                         ActionButton(
                           context: context,
-                          title: "Load Backup",
+                          title: "Retrieve Backup",
                           widthP: 0.6,
                           heightP: 0.08,
                           color: Colors.grey.shade700,
@@ -241,7 +241,7 @@ class _PageSettingsState extends State<PageSettings> {
       saveFile_greek(path);
       saveFile_economics(path);
       saveFile_coding(path);
-      showToastMessage("Backup Made");
+      showToastMessage("Backup Created");
     } else {
       showToastMessage("PATH DOES NOT EXIST");
     }
@@ -254,7 +254,7 @@ class _PageSettingsState extends State<PageSettings> {
       readFile_greek(path);
       readFile_economics(path);
       readFile_coding(path);
-      showToastMessage("Backup Restored");
+      showToastMessage("Backup Retrieved");
     } else {
       showToastMessage("PATH DOES NOT EXIST");
     }
@@ -263,13 +263,13 @@ class _PageSettingsState extends State<PageSettings> {
   void openAndSave() {
     saveFiles("$_directoryPath");
     savePath("$_directoryPath");
-    showToastMessage("Backup Made");
+    showToastMessage("Backup Created");
   }
 
   void openAndLoad() {
     loadFiles("$_directoryPath");
     savePath("$_directoryPath");
-    showToastMessage("Backup Restored");
+    showToastMessage("Backup Retrieved");
   }
 
   void showToastMessage(String message) {
