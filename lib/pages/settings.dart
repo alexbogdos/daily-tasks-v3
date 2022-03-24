@@ -8,6 +8,7 @@ import 'package:daily_tasks_v3/pages/mathematics.dart';
 import 'package:daily_tasks_v3/pages/personal.dart';
 import 'package:daily_tasks_v3/widgets/action_button.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -135,7 +136,7 @@ class _PageSettingsState extends State<PageSettings> {
                           widthP: 0.6,
                           heightP: 0.08,
                           color: Colors.red.shade400,
-                          function: () {
+                          function: () async {
                             if (_directoryPath == "") {
                               _selectFolder().then((value) => openAndSave());
                             } else {
@@ -153,7 +154,7 @@ class _PageSettingsState extends State<PageSettings> {
                           widthP: 0.6,
                           heightP: 0.08,
                           color: Colors.grey.shade700,
-                          function: () {
+                          function: () async {
                             if (_directoryPath == "") {
                               _selectFolder().then((value) => openAndLoad());
                             } else {
@@ -244,6 +245,9 @@ class _PageSettingsState extends State<PageSettings> {
       showToastMessage("Backup Created");
     } else {
       showToastMessage("PATH DOES NOT EXIST");
+      if (kDebugMode) {
+        print("PATH DOES NOT EXIST");
+      }
     }
   }
 
@@ -257,6 +261,9 @@ class _PageSettingsState extends State<PageSettings> {
       showToastMessage("Backup Retrieved");
     } else {
       showToastMessage("PATH DOES NOT EXIST");
+      if (kDebugMode) {
+        print("PATH DOES NOT EXIST");
+      }
     }
   }
 
@@ -312,5 +319,9 @@ Future<void> loadPath() async {
   final prefs = await SharedPreferences.getInstance();
   if (prefs.containsKey("backupPath")) {
     _directoryPath = prefs.getString("backupPath");
+
+    if (!(await Directory(_directoryPath!).exists())) {
+      _directoryPath = "";
+    }
   }
 }
