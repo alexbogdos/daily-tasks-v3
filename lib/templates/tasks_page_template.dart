@@ -37,6 +37,8 @@ class _TasksPageState extends State<TasksPage> {
     Color button_color = widget.backgroundColors[0].withOpacity(0.86);
     Color button_text_color = Colors.white;
 
+    print(MediaQuery.of(context).size);
+
     return Scaffold(
       backgroundColor: widget.backgroundColors[0],
       body: SafeArea(
