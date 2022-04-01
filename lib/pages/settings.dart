@@ -16,6 +16,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String? _directoryPath = "";
+String? _tempDirectoryPath = "";
 
 class PageSettings extends StatefulWidget {
   const PageSettings({Key? key}) : super(key: key);
@@ -29,6 +30,14 @@ class _PageSettingsState extends State<PageSettings> {
     await FilePicker.platform.getDirectoryPath().then((value) {
       if (!(value == null && _directoryPath != null)) {
         setState(() => _directoryPath = value);
+      }
+    });
+  }
+
+  Future<String?> _selectTempFolder() async {
+    await FilePicker.platform.getDirectoryPath().then((value) {
+      if (!(value == null && _directoryPath != null)) {
+        setState(() => _tempDirectoryPath = value);
       }
     });
   }
@@ -135,13 +144,13 @@ class _PageSettingsState extends State<PageSettings> {
                           color: const Color(0xFFFFFFFF).withOpacity(0.9),
                           function: () async {
                             if (_directoryPath == "") {
-                              _selectFolder().then((value) => openAndSave());
+                              _selectFolder().then((value) => openAndSave("$_directoryPath"));
                             } else {
                               saveFiles("$_directoryPath");
                             }
                           },
-                          function2: () {
-                            _selectFolder().then((value) => openAndSave());
+                          function2: () async{
+                            _selectTempFolder().then((value) => openAndSave("$_tempDirectoryPath"));
                           },
                         ),
                         const SizedBox(height: 20),
@@ -153,13 +162,13 @@ class _PageSettingsState extends State<PageSettings> {
                           color: const Color(0xFFFFFFFF).withOpacity(0.9),
                           function: () async {
                             if (_directoryPath == "") {
-                              _selectFolder().then((value) => openAndLoad());
+                              _selectFolder().then((value) => openAndLoad("$_directoryPath"));
                             } else {
                               loadFiles("$_directoryPath");
                             }
                           },
-                          function2: () {
-                            _selectFolder().then((value) => openAndLoad());
+                          function2: () async {
+                            _selectTempFolder().then((value) => openAndLoad("$_tempDirectoryPath"));
                           },
                         ),
                       ],
@@ -168,7 +177,7 @@ class _PageSettingsState extends State<PageSettings> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.7,
                       height: MediaQuery.of(context).size.height * 0.06,
                       decoration: BoxDecoration(
                         color: const Color(0xFF6d69f0),
@@ -271,16 +280,18 @@ class _PageSettingsState extends State<PageSettings> {
     }
   }
 
-  void openAndSave() {
-    saveFiles("$_directoryPath");
-    savePath("$_directoryPath");
-    showToastMessage("Backup Created");
+  void openAndSave(String path) {
+    saveFiles(path);
+    savePath(path);
+    path = parsePath(path);
+    showToastMessage("Using:\n$path");
   }
 
-  void openAndLoad() {
-    loadFiles("$_directoryPath");
-    savePath("$_directoryPath");
-    showToastMessage("Backup Retrieved");
+  void openAndLoad(String path) {
+    loadFiles(path);
+    savePath(path);
+    path = parsePath(path);
+    showToastMessage("Using:\n$path");
   }
 
   void showToastMessage(String message) {

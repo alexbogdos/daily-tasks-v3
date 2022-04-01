@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 //   return
 // }
 
-class ActionButton extends StatelessWidget {
+class ActionButton extends StatefulWidget {
   final BuildContext context;
   final String title;
   final double widthP;
@@ -29,8 +29,19 @@ class ActionButton extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<ActionButton> createState() => _ActionButtonState();
+}
+
+class _ActionButtonState extends State<ActionButton> {
+  final Color titleColor = const Color(0xFF343434);
+  final Color highlightRectColor = const Color(0xFF736ff1);
+  final Color highlightTitleColor = const Color(0xFFfdfdfd);
+
+  late bool highlighted = false;
+
+  @override
   Widget build(BuildContext context) {
-    context = this.context;
+    context = widget.context;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
@@ -46,29 +57,39 @@ class ActionButton extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(13),
         child: Container(
-          width: MediaQuery.of(context).size.width * widthP,
-          height: MediaQuery.of(context).size.height * heightP,
+          width: MediaQuery.of(context).size.width * widget.widthP,
+          height: MediaQuery.of(context).size.height * widget.heightP,
           decoration: BoxDecoration(
-            color: color,
+            color: widget.color,
             shape: BoxShape.rectangle,
           ),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: function,
-              onLongPress: function2,
-              highlightColor: const Color(0xFF343434).withOpacity(0.2),
-              splashColor: const Color(0xFF343434).withOpacity(0.2),
-              hoverColor: const Color(0xFF343434).withOpacity(0.2),
+              onTap: widget.function,
+              onLongPress: widget.function2,
+              onHover: (state) {
+                setState(() {
+                  highlighted = state;
+                });
+              },
+              onHighlightChanged: (state) {
+                setState(() {
+                  highlighted = state;
+                });
+              },
+              highlightColor: highlightRectColor.withOpacity(0.5),
+              splashColor: highlightRectColor,
+              hoverColor: highlightRectColor..withOpacity(0.5),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Center(
                   child: AutoSizeText(
-                    "${title}",
+                    "${widget.title}",
                     style: GoogleFonts.poppins(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w500,
-                      color: const Color(0xFF343434),
+                      color: !highlighted ? titleColor : highlightTitleColor,
                     ),
                   ),
                 ),

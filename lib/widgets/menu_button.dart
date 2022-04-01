@@ -72,9 +72,14 @@ class _MenuButtonState extends State<MenuButton> {
                   highlighted = state;
                 });
               },
-              highlightColor: highlightRectColor,
+              onHighlightChanged: (state) {
+                setState(() {
+                  highlighted = state;
+                });
+              },
+              highlightColor: highlightRectColor.withOpacity(0.5),
               splashColor: highlightRectColor,
-              hoverColor: highlightRectColor,
+              hoverColor: highlightRectColor..withOpacity(0.5),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Column(

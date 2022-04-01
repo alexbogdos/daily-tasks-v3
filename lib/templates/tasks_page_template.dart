@@ -237,7 +237,7 @@ class _TasksPageState extends State<TasksPage> {
                                       0, 0, 0, 30),
                                   child: Container(
                                     width:
-                                        MediaQuery.of(context).size.width * 0.6,
+                                        MediaQuery.of(context).size.width * 0.7,
                                     height: MediaQuery.of(context).size.height *
                                         0.06,
                                     decoration: BoxDecoration(

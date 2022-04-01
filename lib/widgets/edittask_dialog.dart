@@ -32,14 +32,14 @@ class EditTaskDialog {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.96,
+            width: double.infinity, //MediaQuery.of(context).size.width * 0.96,
             height: 304,
             decoration: BoxDecoration(
               color: const Color(0xFF6d69f1).withOpacity(0.6),
               borderRadius: BorderRadius.circular(30.0),
             ),
             padding:
-                const EdgeInsets.symmetric(vertical: 6.0, horizontal: 15.0),
+                const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -92,7 +92,7 @@ class EditTaskDialog {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
+                              horizontal: 6, vertical: 0),
                           child: Text(
                             "Cancel",
                             textAlign: TextAlign.center,
@@ -116,7 +116,7 @@ class EditTaskDialog {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
+                              horizontal: 6, vertical: 0),
                           child: Text(
                             "Delete",
                             textAlign: TextAlign.center,
@@ -141,7 +141,7 @@ class EditTaskDialog {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 2),
+                            horizontal: 6, vertical: 0),
                         child: Text(
                           "Save",
                           textAlign: TextAlign.center,
@@ -166,7 +166,7 @@ class EditTaskDialog {
     //return type is OutlineInputBorder
     return const OutlineInputBorder(
         //Outline border type for Text Field
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
         borderSide: BorderSide(
           color: Color(0xFFf0f1f2),
           width: 3,
@@ -177,7 +177,7 @@ class EditTaskDialog {
     //return type is OutlineInputBorder
     return const OutlineInputBorder(
         //Outline border type for Text Field
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
         borderSide: BorderSide(
           color: Color(0xFF343434),
           width: 3,
