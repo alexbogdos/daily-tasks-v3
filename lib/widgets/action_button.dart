@@ -19,50 +19,57 @@ class ActionButton extends StatelessWidget {
 
   const ActionButton(
       {required this.context,
-        required this.title,
-        required this.widthP,
-        required this.heightP,
-        required this.color,
-        required this.function,
-        required this.function2,
-        Key? key})
+      required this.title,
+      required this.widthP,
+      required this.heightP,
+      required this.color,
+      required this.function,
+      required this.function2,
+      Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     context = this.context;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(13),
-      child: Container(
-        width: MediaQuery.of(context).size.width * widthP,
-        height: MediaQuery.of(context).size.height * heightP,
-        decoration: BoxDecoration(
-          color: color,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8.0,
-              offset: Offset(-4.0, 4.0),
-            ),
-          ],
-          shape: BoxShape.rectangle,
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: function,
-            onLongPress: function2,
-            highlightColor: Colors.white12,
-            splashColor: Colors.white12,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Center(
-                child: AutoSizeText(
-                  "${title}",
-                  style: GoogleFonts.poppins(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(13),
+        color: Colors.transparent,
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF343434).withOpacity(0.1),
+            blurRadius: 6.0,
+            offset: const Offset(6, 6),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(13),
+        child: Container(
+          width: MediaQuery.of(context).size.width * widthP,
+          height: MediaQuery.of(context).size.height * heightP,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.rectangle,
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: function,
+              onLongPress: function2,
+              highlightColor: const Color(0xFF343434).withOpacity(0.2),
+              splashColor: const Color(0xFF343434).withOpacity(0.2),
+              hoverColor: const Color(0xFF343434).withOpacity(0.2),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Center(
+                  child: AutoSizeText(
+                    "${title}",
+                    style: GoogleFonts.poppins(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF343434),
+                    ),
                   ),
                 ),
               ),

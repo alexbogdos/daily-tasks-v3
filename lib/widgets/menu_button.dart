@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 //   return
 // }
 
-class MenuButton extends StatelessWidget {
+class MenuButton extends StatefulWidget {
   final BuildContext context;
   final String title;
   final double fontSize;
@@ -29,56 +29,79 @@ class MenuButton extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<MenuButton> createState() => _MenuButtonState();
+}
+
+class _MenuButtonState extends State<MenuButton> {
+  final Color titleColor = const Color(0xFF343434);
+  final Color highlightRectColor = const Color(0xFF736ff1);
+  final Color highlightTitleColor = const Color(0xFFfdfdfd);
+
+  late bool highlighted = false;
+
+  @override
   Widget build(BuildContext context) {
-    context = this.context;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(13),
-      child: Container(
-        width: MediaQuery.of(context).size.width * widthP,
-        height: MediaQuery.of(context).size.height * 0.112,
-        decoration: BoxDecoration(
-          color: color,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8.0,
-              offset: Offset(-4.0, 4.0),
-            ),
-          ],
-          shape: BoxShape.rectangle,
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: function,
-            highlightColor: Colors.white12,
-            splashColor: Colors.white12,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  AutoSizeText(
-                    "${title}",
-                    style: GoogleFonts.poppins(
-                      fontSize: fontSize * 1.0,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
+    context = widget.context;
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(13),
+        boxShadow: [
+          BoxShadow(
+            color: titleColor.withOpacity(0.1),
+            blurRadius: 6.0,
+            offset: const Offset(6, 6),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(13),
+        child: Container(
+          width: MediaQuery.of(context).size.width * widget.widthP,
+          height: MediaQuery.of(context).size.height * 0.112,
+          decoration: BoxDecoration(
+            color: widget.color,
+            shape: BoxShape.rectangle,
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: widget.function,
+              onHover: (state) {
+                setState(() {
+                  highlighted = state;
+                });
+              },
+              highlightColor: highlightRectColor,
+              splashColor: highlightRectColor,
+              hoverColor: highlightRectColor,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    AutoSizeText(
+                      "${widget.title}",
+                      style: GoogleFonts.poppins(
+                        fontSize: widget.fontSize * 1.0,
+                        fontWeight: FontWeight.w500,
+                        color: !highlighted ? titleColor : highlightTitleColor,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Icon(
-                      icon,
-                      color: Colors.white,
-                      size: 42,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,
                     ),
-                  ),
-                ],
+                    FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Icon(
+                        widget.icon,
+                        color: !highlighted ? titleColor : highlightTitleColor,
+                        size: 42,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

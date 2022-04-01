@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 TasksPage pageGreek = TasksPage(
   title: "Greek",
-  backgroundColors: const [Color(0xffFFD6A5), Color(0xffCAFFBF)],
+  backgroundColors: const [Color(0xffFAF4FB), Color(0xffFAF1D9)],
   tasksList: tasksList_greek,
   archivedList: archivedList_greek,
   datesList: datesList_greek,

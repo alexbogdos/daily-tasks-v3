@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 TasksPage pageEconomics = TasksPage(
   title: "Economics",
-  backgroundColors: const [Color(0xffBDB2FF), Color(0xffFFFFFC)],
+  backgroundColors: const [Color(0xffFAF4FB), Color(0xffFAF1D9)],
   tasksList: tasksList_economics,
   archivedList: archivedList_economics,
   datesList: datesList_economics,

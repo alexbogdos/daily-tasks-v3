@@ -34,22 +34,14 @@ class TasksPage extends StatefulWidget {
 class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
-    Color button_color = widget.backgroundColors[0].withOpacity(0.86);
-    Color button_text_color = Colors.white;
-    
     return Scaffold(
-      backgroundColor: widget.backgroundColors[0],
+      backgroundColor: const Color(0xFFf0f1f2),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: widget.backgroundColors,
-                stops: const [0.0, 1.0],
-              ),
+            decoration: const BoxDecoration(
+              color: Color(0xFFf0f1f2),
             ),
             child: DefaultTabController(
               length: 2,
@@ -74,14 +66,16 @@ class _TasksPageState extends State<TasksPage> {
                                     "Back",
                                     style: GoogleFonts.poppins(
                                       fontSize: 18,
-                                      color: Colors.white70,
+                                      color: const Color(0xFF6d69f0)
+                                          .withOpacity(0.6),
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                 ),
                                 style: TextButton.styleFrom(
-                                  primary: Colors.white,
-                                ),
+                                    backgroundColor: Colors.transparent,
+                                    primary: const Color(0xFF6d69f0)
+                                        .withOpacity(0.6)),
                               ),
                             ),
                           ],
@@ -92,13 +86,14 @@ class _TasksPageState extends State<TasksPage> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                               fontSize: 30,
-                              color: Colors.white,
+                              color: const Color(0xFF343434),
                               fontWeight: FontWeight.w700,
                               shadows: [
-                                const Shadow(
-                                  blurRadius: 8.0,
-                                  color: Colors.black12,
-                                  offset: Offset(-4.0, 4.0),
+                                Shadow(
+                                  blurRadius: 2.0,
+                                  color:
+                                      const Color(0xFF343434).withOpacity(0.1),
+                                  offset: const Offset(5.0, 5.0),
                                 ),
                               ],
                             ),
@@ -110,10 +105,10 @@ class _TasksPageState extends State<TasksPage> {
                       height: 10,
                     ),
                     TabBar(
-                      labelColor: Colors.white,
+                      labelColor: const Color(0xFF343434),
                       labelStyle: GoogleFonts.poppins(
                           fontSize: 22, fontWeight: FontWeight.w600),
-                      indicatorColor: Colors.white70,
+                      indicatorColor: const Color(0xFF343434).withOpacity(0.8),
                       tabs: [
                         Tab(
                             child: Row(
@@ -134,15 +129,15 @@ class _TasksPageState extends State<TasksPage> {
                                   child: Text(
                                     '${widget.tasksList.length}',
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.9),
+                                      color: const Color(0xFF343434)
+                                          .withOpacity(0.9),
                                       fontSize: 16,
                                     ),
                                   ),
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                color: widget.backgroundColors[1]
-                                    .withOpacity(0.34),
+                                color: const Color(0xFF343434).withOpacity(0.1),
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -167,15 +162,15 @@ class _TasksPageState extends State<TasksPage> {
                                   child: Text(
                                     '${widget.archivedList.length}',
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.9),
+                                      color: const Color(0xFF343434)
+                                          .withOpacity(0.9),
                                       fontSize: 16,
                                     ),
                                   ),
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                color: widget.backgroundColors[1]
-                                    .withOpacity(0.34),
+                                color: const Color(0xFF343434).withOpacity(0.1),
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -193,7 +188,7 @@ class _TasksPageState extends State<TasksPage> {
                               alignment: const AlignmentDirectional(0, 1),
                               children: [
                                 Scrollbar(
-                                  thickness: 6,
+                                  thickness: 8,
                                   interactive: true,
                                   radius: const Radius.circular(5),
                                   child: Theme(
@@ -246,8 +241,16 @@ class _TasksPageState extends State<TasksPage> {
                                     height: MediaQuery.of(context).size.height *
                                         0.06,
                                     decoration: BoxDecoration(
-                                      color: button_color,
+                                      color: const Color(0xFF6d69f0),
                                       borderRadius: BorderRadius.circular(15),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: const Color(0xFF343434)
+                                              .withOpacity(0.1),
+                                          blurRadius: 6.0,
+                                          offset: const Offset(6, 6),
+                                        ),
+                                      ],
                                     ),
                                     child: Stack(
                                       fit: StackFit.expand,
@@ -259,9 +262,9 @@ class _TasksPageState extends State<TasksPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Icon(
+                                              const Icon(
                                                 Icons.add_rounded,
-                                                color: button_text_color,
+                                                color: Color(0xFFFFFFFF),
                                                 size: 24,
                                               ),
                                               const SizedBox(
@@ -271,7 +274,8 @@ class _TasksPageState extends State<TasksPage> {
                                                 'New Task',
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.poppins(
-                                                  color: button_text_color,
+                                                  color:
+                                                      const Color(0xFFFFFFFF),
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -285,7 +289,6 @@ class _TasksPageState extends State<TasksPage> {
                                             EditTaskDialog(
                                               context: context,
                                               isNew: true,
-                                              colors: widget.backgroundColors,
                                               index:
                                                   widget.tasksList.length - 1,
                                               tasksList: widget.tasksList,
@@ -301,7 +304,6 @@ class _TasksPageState extends State<TasksPage> {
                                             EditTaskDialog(
                                               context: context,
                                               isNew: true,
-                                              colors: widget.backgroundColors,
                                               index: 0,
                                               tasksList: widget.tasksList,
                                               notifyParent: () {
@@ -330,7 +332,7 @@ class _TasksPageState extends State<TasksPage> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 10, 0, 0),
                             child: Scrollbar(
-                              thickness: 6,
+                              thickness: 8,
                               interactive: true,
                               radius: const Radius.circular(5),
                               child: ListView.builder(

@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class EditTaskDialog {
   final context;
-  final List<Color> colors;
   final int index;
   final List<String> tasksList;
   final notifyParent;
@@ -16,7 +15,6 @@ class EditTaskDialog {
   EditTaskDialog({
     required this.context,
     required this.isNew,
-    required this.colors,
     required this.index,
     required this.tasksList,
     required this.notifyParent,
@@ -30,19 +28,14 @@ class EditTaskDialog {
       context: context,
       builder: (context) {
         return Dialog(
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xFFf0f1f2),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           child: Container(
             width: MediaQuery.of(context).size.width * 0.96,
             height: 304,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: colors,
-                stops: const [0.0, 1.0],
-              ),
+              color: const Color(0xFF6d69f1).withOpacity(0.6),
               borderRadius: BorderRadius.circular(30.0),
             ),
             padding:
@@ -76,7 +69,7 @@ class EditTaskDialog {
                     decoration: InputDecoration(
                         enabledBorder: unfocusedBorder(),
                         focusedBorder: focusedBorder(),
-                        fillColor: colors[0].withOpacity(0.2),
+                        fillColor: const Color(0xFFf0f1f2).withOpacity(0.2),
                         filled: true),
                   ),
                 ),
@@ -85,14 +78,14 @@ class EditTaskDialog {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     if (isNew)
-                      ElevatedButton(
+                      TextButton(
                         onPressed: () {
                           tasksList.removeAt(index);
                           Navigator.of(context).pop();
                           notifyParent();
                         },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
+                        style: TextButton.styleFrom(
+                          backgroundColor: const Color(0xFFf0f1f2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -105,18 +98,18 @@ class EditTaskDialog {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                               fontSize: 20,
-                              color: Colors.black45,
+                              color: const Color(0xFF343434),
                             ),
                           ),
                         ),
                       )
                     else
-                      ElevatedButton(
+                      TextButton(
                         onPressed: () {
                           _confirmationDialog(context);
                         },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
+                        style: TextButton.styleFrom(
+                          backgroundColor: const Color(0xFFf0f1f2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -129,19 +122,19 @@ class EditTaskDialog {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                               fontSize: 20,
-                              color: Colors.black45,
+                              color: const Color(0xFF343434),
                             ),
                           ),
                         ),
                       ),
-                    ElevatedButton(
+                    TextButton(
                       onPressed: () {
                         tasksList[index] = editedText;
                         Navigator.of(context).pop();
                         notifyParent();
                       },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color(0xFFf0f1f2),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
@@ -154,7 +147,7 @@ class EditTaskDialog {
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(
                             fontSize: 20,
-                            color: Colors.black54,
+                            color: const Color(0xFF343434),
                           ),
                         ),
                       ),
@@ -171,22 +164,22 @@ class EditTaskDialog {
 
   OutlineInputBorder unfocusedBorder() {
     //return type is OutlineInputBorder
-    return OutlineInputBorder(
+    return const OutlineInputBorder(
         //Outline border type for Text Field
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
         borderSide: BorderSide(
-          color: colors[0],
+          color: Color(0xFFf0f1f2),
           width: 3,
         ));
   }
 
   OutlineInputBorder focusedBorder() {
     //return type is OutlineInputBorder
-    return OutlineInputBorder(
+    return const OutlineInputBorder(
         //Outline border type for Text Field
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
         borderSide: BorderSide(
-          color: colors[1],
+          color: Color(0xFF343434),
           width: 3,
         ));
   }

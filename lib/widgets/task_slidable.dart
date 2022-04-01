@@ -62,7 +62,6 @@ class _TaskSlidableState extends State<TaskSlidable> {
     EditTaskDialog(
       context: context,
       isNew: false,
-      colors: widget.colors,
       index: widget.index,
       tasksList: widget.tasksList,
       notifyParent: () {
@@ -116,7 +115,7 @@ class _TaskSlidableState extends State<TaskSlidable> {
                 minHeight: 44, //minimum height
               ),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.4),
+                color: const Color(0xFFFFFFFF).withOpacity(0.42),
                 borderRadius: BorderRadius.circular(9),
               ),
               child: Padding(
@@ -145,11 +144,11 @@ Widget parseText(String text) {
       alignment:
           text.contains(r'$center') ? Alignment.center : Alignment.centerLeft,
       child: Text(
-        "$text",
+        "${text.replaceAll(r"$center", "").trim()}",
         textAlign:
             text.contains(r'$center') ? TextAlign.center : TextAlign.start,
         style: GoogleFonts.zenMaruGothic(
-          color: Colors.black45,
+          color: const Color(0xFF343434).withOpacity(0.9),
           fontSize: 20,
           fontWeight: FontWeight.w500,
         ),
@@ -172,12 +171,12 @@ Widget parseText(String text) {
               ? Alignment.center
               : Alignment.centerLeft,
           child: Text(
-            "$text1",
+            "${text1.trim()}",
             textAlign: text.contains(r'$titleCenter')
                 ? TextAlign.center
                 : TextAlign.start,
             style: GoogleFonts.zenMaruGothic(
-              color: Colors.black45,
+              color: const Color(0xFF343434).withOpacity(0.96),
               fontSize: 22,
               fontWeight: FontWeight.w900,
             ),
@@ -189,12 +188,12 @@ Widget parseText(String text) {
                 ? Alignment.center
                 : Alignment.centerLeft,
             child: Text(
-              "$text2",
+              "${text2.replaceAll(r'$center', "").trim()}",
               textAlign: text.substring(index).contains(r'$center')
                   ? TextAlign.center
                   : TextAlign.start,
               style: GoogleFonts.zenMaruGothic(
-                color: Colors.black45,
+                color: const Color(0xFF343434).withOpacity(0.9),
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
               ),

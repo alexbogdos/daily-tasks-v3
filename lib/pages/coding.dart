@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 TasksPage pageCoding = TasksPage(
   title: "Coding",
-  backgroundColors: const [Color(0xffFFADAD), Color(0xffFFC6FF)],
+  backgroundColors: const [Color(0xffFAF4FB), Color(0xffFAF1D9)],
   tasksList: tasksList_coding,
   archivedList: archivedList_coding,
   datesList: datesList_coding,

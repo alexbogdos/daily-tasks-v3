@@ -38,18 +38,13 @@ class _PageSettingsState extends State<PageSettings> {
     askPermissions();
 
     return Scaffold(
-      backgroundColor: const Color(0xffe8c774),
+      backgroundColor: const Color(0xffFAF4FB),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0xffe8c774), Color(0xfff1a76c)],
-                stops: [0.0, 1.0],
-              ),
+              color: Color(0xFFf0f1f2),
             ),
             child: Padding(
               padding: EdgeInsets.only(
@@ -70,13 +65,14 @@ class _PageSettingsState extends State<PageSettings> {
                               'Settings:',
                               style: GoogleFonts.poppins(
                                 fontSize: 30,
-                                color: Colors.white,
+                                color: const Color(0xFF343434),
                                 fontWeight: FontWeight.w700,
                                 shadows: [
-                                  const Shadow(
-                                    blurRadius: 8.0,
-                                    color: Colors.black12,
-                                    offset: Offset(-4.0, 4.0),
+                                  Shadow(
+                                    blurRadius: 2.0,
+                                    color: const Color(0xFF343434)
+                                        .withOpacity(0.1),
+                                    offset: const Offset(5.0, 5.0),
                                   ),
                                 ],
                               ),
@@ -93,7 +89,7 @@ class _PageSettingsState extends State<PageSettings> {
                             style: GoogleFonts.poppins(
                               fontSize: 24.0,
                               fontWeight: FontWeight.w600,
-                              color: Colors.white.withOpacity(0.9),
+                              color: const Color(0xFF343434).withOpacity(0.9),
                             ),
                           ),
                         ),
@@ -108,7 +104,8 @@ class _PageSettingsState extends State<PageSettings> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.w400,
-                                  color: Colors.white.withOpacity(0.8),
+                                  color:
+                                      const Color(0xFF343434).withOpacity(0.8),
                                 ),
                               ),
                             ),
@@ -122,7 +119,7 @@ class _PageSettingsState extends State<PageSettings> {
                           title: "Select Backup Folder",
                           widthP: 0.6,
                           heightP: 0.08,
-                          color: Colors.blueGrey.shade300,
+                          color: const Color(0xFFFFFFFF).withOpacity(0.9),
                           function: () {
                             _selectFolder()
                                 .then((value) => savePath("$_directoryPath"));
@@ -135,7 +132,7 @@ class _PageSettingsState extends State<PageSettings> {
                           title: "Create Backup",
                           widthP: 0.6,
                           heightP: 0.08,
-                          color: Colors.red.shade400,
+                          color: const Color(0xFFFFFFFF).withOpacity(0.9),
                           function: () async {
                             if (_directoryPath == "") {
                               _selectFolder().then((value) => openAndSave());
@@ -153,7 +150,7 @@ class _PageSettingsState extends State<PageSettings> {
                           title: "Retrieve Backup",
                           widthP: 0.6,
                           heightP: 0.08,
-                          color: Colors.grey.shade700,
+                          color: const Color(0xFFFFFFFF).withOpacity(0.9),
                           function: () async {
                             if (_directoryPath == "") {
                               _selectFolder().then((value) => openAndLoad());
@@ -174,8 +171,15 @@ class _PageSettingsState extends State<PageSettings> {
                       width: MediaQuery.of(context).size.width * 0.6,
                       height: MediaQuery.of(context).size.height * 0.06,
                       decoration: BoxDecoration(
-                        color: Colors.white12,
+                        color: const Color(0xFF6d69f0),
                         borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF343434).withOpacity(0.1),
+                            blurRadius: 6.0,
+                            offset: const Offset(6, 6),
+                          ),
+                        ],
                       ),
                       child: Stack(
                         fit: StackFit.expand,
@@ -198,7 +202,8 @@ class _PageSettingsState extends State<PageSettings> {
                             },
                             child: const Text(''),
                             style: TextButton.styleFrom(
-                              primary: Colors.white12,
+                              backgroundColor: Colors.transparent,
+                              primary: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ),
@@ -233,7 +238,6 @@ class _PageSettingsState extends State<PageSettings> {
     }
     return pathText;
   }
-
 
   void saveFiles(String path) async {
     if (await Directory(path).exists()) {

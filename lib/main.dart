@@ -31,22 +31,19 @@ class _MainPageState extends State<MainPage> {
     super.initState();
   }
 
+  final Color backgroundColor = const Color(0xFFf0f1f2);
+  final Color titleColor = const Color(0xFF343434);
+  final Color buttonColor = const Color(0xFFfdfdfd);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffE9C46A),
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0xffE9C46A), Color(0xffF4A261)],
-                stops: [0.0, 1.0],
-              ),
-            ),
+            decoration: BoxDecoration(color: backgroundColor),
             child: Padding(
               padding: EdgeInsets.only(
                   top: (MediaQuery.of(context).size.height * 0.02)),
@@ -63,13 +60,13 @@ class _MainPageState extends State<MainPage> {
                         'Your\ntopics:',
                         style: GoogleFonts.poppins(
                           fontSize: 30,
-                          color: Colors.white,
+                          color: titleColor,
                           fontWeight: FontWeight.w700,
                           shadows: [
-                            const Shadow(
-                              blurRadius: 8.0,
-                              color: Colors.black12,
-                              offset: Offset(-4.0, 4.0),
+                            Shadow(
+                              blurRadius: 2.0,
+                              color: titleColor.withOpacity(0.1),
+                              offset: const Offset(5.0, 5.0),
                             ),
                           ],
                         ),
@@ -86,7 +83,7 @@ class _MainPageState extends State<MainPage> {
                     fontSize: 24.0,
                     icon: Icons.person_rounded,
                     widthP: 0.74,
-                    color: PagePersonal.backgroundColors[0],
+                    color: buttonColor,
                     function: () {
                       Get.to(() => PagePersonal,
                           transition: Transition.downToUp,
@@ -110,7 +107,7 @@ class _MainPageState extends State<MainPage> {
                           fontSize: 20.0,
                           icon: Icons.functions_rounded,
                           widthP: 0.32,
-                          color: PageMathematics.backgroundColors[0],
+                          color: buttonColor,
                           function: () {
                             Get.to(() => PageMathematics,
                                 transition: Transition.downToUp,
@@ -123,7 +120,7 @@ class _MainPageState extends State<MainPage> {
                           fontSize: 20.0,
                           icon: Icons.attach_money_rounded,
                           widthP: 0.32,
-                          color: pageEconomics.backgroundColors[0],
+                          color: buttonColor,
                           function: () {
                             Get.to(() => pageEconomics,
                                 transition: Transition.downToUp,
@@ -150,7 +147,7 @@ class _MainPageState extends State<MainPage> {
                           fontSize: 20.0,
                           icon: Icons.language_rounded,
                           widthP: 0.32,
-                          color: pageGreek.backgroundColors[0],
+                          color: buttonColor,
                           function: () {
                             Get.to(() => pageGreek,
                                 transition: Transition.downToUp,
@@ -163,7 +160,7 @@ class _MainPageState extends State<MainPage> {
                           fontSize: 20.0,
                           icon: Icons.computer_rounded,
                           widthP: 0.32,
-                          color: pageCoding.backgroundColors[0],
+                          color: buttonColor,
                           function: () {
                             Get.to(() => pageCoding,
                                 transition: Transition.downToUp,
@@ -182,7 +179,7 @@ class _MainPageState extends State<MainPage> {
                     fontSize: 24.0,
                     icon: Icons.settings_rounded,
                     widthP: 0.74,
-                    color: const Color(0xffF4A261),
+                    color: buttonColor,
                     function: () {
                       Get.to(() => const PageSettings(),
                           transition: Transition.upToDown,

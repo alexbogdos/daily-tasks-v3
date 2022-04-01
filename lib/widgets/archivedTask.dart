@@ -32,7 +32,7 @@ class ArchivedTask extends StatelessWidget {
               minHeight: 44, //minimum height
             ),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.4),
+              color: const Color(0xFFFFFFFF).withOpacity(0.42),
               borderRadius: BorderRadius.circular(9),
             ),
             child: Padding(
@@ -46,7 +46,7 @@ class ArchivedTask extends StatelessWidget {
                     child: Text(
                       "$date",
                       style: GoogleFonts.poppins(
-                        color: Colors.black45,
+                        color: const Color(0xFF343434).withOpacity(0.8),
                         fontSize: 10,
                       ),
                       textAlign: TextAlign.left,

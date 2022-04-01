@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 TasksPage PagePersonal = TasksPage(
   title: "Personal",
-  backgroundColors: const [Color(0xffFFCB69), Color(0xffD08C60)],
+  backgroundColors: const [Color(0xffFAF4FB), Color(0xffFAF1D9)],
   tasksList: tasksList_personal,
   archivedList: archivedList_personal,
   datesList: datesList_personal,

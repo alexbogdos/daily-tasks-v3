@@ -32,16 +32,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffE9C46A),
+      backgroundColor: const Color(0xFFf0f1f2),
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Color(0xffE9C46A), Color(0xffF4A261)],
-              stops: [0.0, 1.0],
-            ),
+            color: Color(0xFFf0f1f2),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -51,13 +46,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 style: GoogleFonts.poppins(
                     fontSize: 24.0,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white),
+                    color: const Color(0xFF343434)),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 14.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0, vertical: 14.0),
                 child: LinearProgressIndicator(
-                  backgroundColor: Colors.black26,
-                  color: Colors.white70,
+                  backgroundColor: const Color(0xFF343434).withOpacity(0.2),
+                  color: const Color(0xFF343434).withOpacity(0.8),
                   minHeight: 5,
                 ),
               ),

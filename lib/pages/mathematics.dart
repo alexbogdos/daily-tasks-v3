@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 TasksPage PageMathematics = TasksPage(
   title: "Mathematics",
-  backgroundColors: const [Color(0xffFFC6FF), Color(0xffFDFFB6)],
+  backgroundColors: const [Color(0xffFAF4FB), Color(0xffFAF1D9)],
   tasksList: tasksList_mathematics,
   archivedList: archivedList_mathematics,
   datesList: datesList_mathematics,
