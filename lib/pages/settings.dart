@@ -144,13 +144,15 @@ class _PageSettingsState extends State<PageSettings> {
                           color: const Color(0xFFFFFFFF).withOpacity(0.9),
                           function: () async {
                             if (_directoryPath == "") {
-                              _selectFolder().then((value) => openAndSave("$_directoryPath", true));
+                              _selectFolder().then((value) =>
+                                  openAndSave("$_directoryPath", true));
                             } else {
                               saveFiles("$_directoryPath");
                             }
                           },
-                          function2: () async{
-                            _selectTempFolder().then((value) => openAndSave("$_tempDirectoryPath", false));
+                          function2: () async {
+                            _selectTempFolder().then((value) =>
+                                openAndSave("$_tempDirectoryPath", false));
                           },
                         ),
                         const SizedBox(height: 20),
@@ -162,13 +164,15 @@ class _PageSettingsState extends State<PageSettings> {
                           color: const Color(0xFFFFFFFF).withOpacity(0.9),
                           function: () async {
                             if (_directoryPath == "") {
-                              _selectFolder().then((value) => openAndLoad("$_directoryPath", true));
+                              _selectFolder().then((value) =>
+                                  openAndLoad("$_directoryPath", true));
                             } else {
                               loadFiles("$_directoryPath");
                             }
                           },
                           function2: () async {
-                            _selectTempFolder().then((value) => openAndLoad("$_tempDirectoryPath", false));
+                            _selectTempFolder().then((value) =>
+                                openAndLoad("$_tempDirectoryPath", false));
                           },
                         ),
                       ],
@@ -281,6 +285,10 @@ class _PageSettingsState extends State<PageSettings> {
   }
 
   void openAndSave(String path, bool save) {
+    if (path == "") {
+      return;
+    }
+
     saveFiles(path);
     if (save == true) {
       savePath(path);
@@ -290,6 +298,9 @@ class _PageSettingsState extends State<PageSettings> {
   }
 
   void openAndLoad(String path, bool save) {
+    if (path == "") {
+      return;
+    }
     loadFiles(path);
     if (save == true) {
       savePath(path);

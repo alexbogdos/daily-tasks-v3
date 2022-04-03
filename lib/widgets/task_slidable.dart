@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_interpolations
+import 'dart:io' show Platform;
 
 import 'package:daily_tasks_v3/widgets/edittask_dialog.dart';
 import 'package:flutter/foundation.dart';
@@ -120,7 +121,10 @@ class _TaskSlidableState extends State<TaskSlidable> {
               ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+                    Platform.isWindows || Platform.isMacOS || Platform.isLinux
+                        ? const EdgeInsets.fromLTRB(10.0, 4.0, 12.0, 4.0)
+                        : const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 4.0),
                 child: parseText(widget.text),
               ),
             ),
