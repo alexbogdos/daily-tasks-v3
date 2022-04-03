@@ -34,7 +34,7 @@ class _PageSettingsState extends State<PageSettings> {
     });
   }
 
-  Future<String?> _selectTempFolder() async {
+  Future<void> _selectTempFolder() async {
     await FilePicker.platform.getDirectoryPath().then((value) {
       if (!(value == null && _directoryPath != null)) {
         setState(() => _tempDirectoryPath = value);

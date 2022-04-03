@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage> {
   final Color backgroundColor = const Color(0xFFf0f1f2);
   final Color titleColor = const Color(0xFF343434);
   final Color buttonColor = const Color(0xFFfdfdfd);
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
