@@ -148,7 +148,7 @@ Widget parseText(String text) {
       alignment:
           text.contains(r'$center') ? Alignment.center : Alignment.centerLeft,
       child: Text(
-        "${text.replaceAll(r"$center", "").trim()}",
+        "${text.replaceAll(r"$center", "").trim().replaceAll(r'$blankLine', " ")}",
         textAlign:
             text.contains(r'$center') ? TextAlign.center : TextAlign.start,
         style: GoogleFonts.zenMaruGothic(
@@ -175,7 +175,7 @@ Widget parseText(String text) {
               ? Alignment.center
               : Alignment.centerLeft,
           child: Text(
-            "${text1.trim()}",
+            "${text1.trim().replaceAll(r'$blankLine', " ")}",
             textAlign: text.contains(r'$titleCenter')
                 ? TextAlign.center
                 : TextAlign.start,
@@ -192,7 +192,7 @@ Widget parseText(String text) {
                 ? Alignment.center
                 : Alignment.centerLeft,
             child: Text(
-              "${text2.replaceAll(r'$center', "").trim()}",
+              "${text2.replaceAll(r'$center', "").trim().replaceAll(r'$blankLine', " ")}",
               textAlign: text.substring(index).contains(r'$center')
                   ? TextAlign.center
                   : TextAlign.start,
