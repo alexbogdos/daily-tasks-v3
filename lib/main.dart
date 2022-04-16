@@ -7,29 +7,21 @@ import 'package:daily_tasks_v3/pages/mathematics.dart';
 import 'package:daily_tasks_v3/pages/settings.dart';
 import 'package:daily_tasks_v3/widgets/menu_button.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'pages/personal.dart';
 
 void main() {
+  // debugRepaintRainbowEnabled = true;
   runApp(const GetMaterialApp(
     home: LoadingScreen(),
   ));
 }
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
-
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   final Color backgroundColor = const Color(0xFFf0f1f2);
   final Color titleColor = const Color(0xFF343434);
