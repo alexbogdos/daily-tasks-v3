@@ -66,8 +66,16 @@ class _ActionButtonState extends State<ActionButton> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: widget.function,
-              onLongPress: widget.function2,
+              onTap: () async {
+                await Future.delayed(const Duration(milliseconds: 125), () {
+                  widget.function();
+                });
+              },
+              onLongPress: () async {
+                await Future.delayed(const Duration(milliseconds: 125), () {
+                  widget.function2();
+                });
+              },
               onHover: (state) {
                 setState(() {
                   highlighted = state;
@@ -80,7 +88,7 @@ class _ActionButtonState extends State<ActionButton> {
               },
               highlightColor: highlightRectColor.withOpacity(0.5),
               splashColor: highlightRectColor,
-              hoverColor: highlightRectColor..withOpacity(0.5),
+              hoverColor: highlightRectColor.withOpacity(0.5),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Center(

@@ -17,6 +17,12 @@ List<String> tasksList_personal = [];
 List<String> archivedList_personal = [];
 List<String> datesList_personal = [];
 
+void reload_personal() {
+  PagePersonal.tasksList = tasksList_personal;
+  PagePersonal.archivedList = archivedList_personal;
+  PagePersonal.datesList = datesList_personal;
+}
+
 String key_personal = 'personal';
 
 void saveLists_personal() {

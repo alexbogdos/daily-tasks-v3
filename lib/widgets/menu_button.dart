@@ -4,10 +4,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Container MenuButton(context, title, fontSize, icon, widthP, color, function) {
-//   return
-// }
-
 class MenuButton extends StatefulWidget {
   final BuildContext context;
   final String title;
@@ -43,14 +39,17 @@ class _MenuButtonState extends State<MenuButton> {
   Widget build(BuildContext context) {
     context = widget.context;
 
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 175),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
         boxShadow: [
           BoxShadow(
-            color: titleColor.withOpacity(0.1),
+            color: !highlighted
+                ? titleColor.withOpacity(0.1)
+                : titleColor.withOpacity(0.25),
             blurRadius: 6.0,
-            offset: const Offset(6, 6),
+            offset: !highlighted ? const Offset(6, 6) : const Offset(10, 10),
           ),
         ],
       ),
@@ -66,7 +65,11 @@ class _MenuButtonState extends State<MenuButton> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: widget.function,
+              onTap: () async {
+                await Future.delayed(const Duration(milliseconds: 125), () {
+                  widget.function();
+                });
+              },
               onHover: (state) {
                 setState(() {
                   highlighted = state;
@@ -79,7 +82,7 @@ class _MenuButtonState extends State<MenuButton> {
               },
               highlightColor: highlightRectColor.withOpacity(0.5),
               splashColor: highlightRectColor,
-              hoverColor: highlightRectColor..withOpacity(0.5),
+              hoverColor: highlightRectColor.withOpacity(0.6),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Column(

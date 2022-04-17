@@ -7,14 +7,15 @@ import 'package:daily_tasks_v3/pages/mathematics.dart';
 import 'package:daily_tasks_v3/pages/settings.dart';
 import 'package:daily_tasks_v3/widgets/menu_button.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'pages/personal.dart';
+
+// import 'package:flutter/rendering.dart';
 
 void main() {
   // debugRepaintRainbowEnabled = true;
+
   runApp(const GetMaterialApp(
     home: LoadingScreen(),
   ));
@@ -27,8 +28,21 @@ class MainPage extends StatelessWidget {
   final Color titleColor = const Color(0xFF343434);
   final Color buttonColor = const Color(0xFFfdfdfd);
 
+  void reloadPages() {
+    reload_personal();
+    reload_mathematics();
+    reload_economics();
+    reload_greek();
+    reload_greek();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (toRebuild == true) {
+      reloadPages();
+      toRebuild = false;
+    }
+
     return Scaffold(
       backgroundColor: backgroundColor,
       body: SafeArea(
@@ -49,7 +63,7 @@ class MainPage extends StatelessWidget {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
                       child: AutoSizeText(
-                        'Your\ntopics:',
+                        'My\ntopics:',
                         style: GoogleFonts.poppins(
                           fontSize: 30,
                           color: titleColor,
@@ -114,7 +128,7 @@ class MainPage extends StatelessWidget {
                           widthP: 0.32,
                           color: buttonColor,
                           function: () {
-                            Get.to(() => pageEconomics,
+                            Get.to(() => PageEconomics,
                                 transition: Transition.downToUp,
                                 duration: const Duration(milliseconds: 200));
                           },
@@ -141,7 +155,7 @@ class MainPage extends StatelessWidget {
                           widthP: 0.32,
                           color: buttonColor,
                           function: () {
-                            Get.to(() => pageGreek,
+                            Get.to(() => PageGreek,
                                 transition: Transition.downToUp,
                                 duration: const Duration(milliseconds: 200));
                           },
@@ -154,7 +168,7 @@ class MainPage extends StatelessWidget {
                           widthP: 0.32,
                           color: buttonColor,
                           function: () {
-                            Get.to(() => pageCoding,
+                            Get.to(() => PageCoding,
                                 transition: Transition.downToUp,
                                 duration: const Duration(milliseconds: 200));
                           },

@@ -4,7 +4,7 @@ import 'package:daily_tasks_v3/templates/tasks_page_functions.dart';
 import 'package:daily_tasks_v3/templates/tasks_page_template.dart';
 import 'package:flutter/material.dart';
 
-TasksPage pageCoding = TasksPage(
+TasksPage PageCoding = TasksPage(
   title: "Coding",
   backgroundColors: const [Color(0xffFAF4FB), Color(0xffFAF1D9)],
   tasksList: tasksList_coding,
@@ -16,6 +16,12 @@ TasksPage pageCoding = TasksPage(
 List<String> tasksList_coding = [];
 List<String> archivedList_coding = [];
 List<String> datesList_coding = [];
+
+void reload_coding() {
+  PageCoding.tasksList = tasksList_coding;
+  PageCoding.archivedList = archivedList_coding;
+  PageCoding.datesList = datesList_coding;
+}
 
 String key_coding = 'coding';
 

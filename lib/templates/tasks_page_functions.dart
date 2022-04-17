@@ -21,7 +21,6 @@ Future<List<List<String>>> retrieveLists(
     required List<String> archivedList,
     required List<String> datesList,
     required String key}) async {
-  // Obtain shared preferences.
   final prefs = await SharedPreferences.getInstance();
 
   if (prefs.containsKey('tasksList_$key')) {
@@ -96,7 +95,7 @@ Future<void> saveFile(
       string += tasksList[index];
     }
   }
-  await fileTasksList.writeAsString(string);
+  fileTasksList.writeAsString(string);
 
   File fileArchivedList = File(filePaths[1]);
   string = "";
@@ -107,7 +106,7 @@ Future<void> saveFile(
       string += archivedList[index];
     }
   }
-  await fileArchivedList.writeAsString(string);
+  fileArchivedList.writeAsString(string);
 
   File fileDatesList = File(filePaths[2]);
   string = "";
@@ -118,7 +117,7 @@ Future<void> saveFile(
       string += datesList[index];
     }
   }
-  await fileDatesList.writeAsString(string);
+  fileDatesList.writeAsString(string);
 
   if (kDebugMode) {
     print("Lists Saved");

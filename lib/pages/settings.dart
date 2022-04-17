@@ -7,6 +7,7 @@ import 'package:daily_tasks_v3/pages/greek.dart';
 import 'package:daily_tasks_v3/pages/mathematics.dart';
 import 'package:daily_tasks_v3/pages/personal.dart';
 import 'package:daily_tasks_v3/widgets/action_button.dart';
+import 'package:daily_tasks_v3/widgets/settings_bottom_button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+bool toRebuild = false;
 
 String? _directoryPath = "";
 String? _tempDirectoryPath = "";
@@ -41,6 +44,8 @@ class _PageSettingsState extends State<PageSettings> {
       }
     });
   }
+
+  late bool retrieved = false;
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +168,9 @@ class _PageSettingsState extends State<PageSettings> {
                           heightP: 0.08,
                           color: const Color(0xFFFFFFFF).withOpacity(0.9),
                           function: () async {
+                            setState(() {
+                              retrieved = true;
+                            });
                             if (_directoryPath == "") {
                               _selectFolder().then((value) =>
                                   openAndLoad("$_directoryPath", true));
@@ -171,6 +179,7 @@ class _PageSettingsState extends State<PageSettings> {
                             }
                           },
                           function2: () async {
+                            retrieved = true;
                             _selectTempFolder().then((value) =>
                                 openAndLoad("$_tempDirectoryPath", false));
                           },
@@ -180,51 +189,7 @@ class _PageSettingsState extends State<PageSettings> {
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF6d69f0),
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFF343434).withOpacity(0.1),
-                            blurRadius: 6.0,
-                            offset: const Offset(6, 6),
-                          ),
-                        ],
-                      ),
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: AutoSizeText(
-                              'Apply & Go Back',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text(''),
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              primary: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: SettingsBottomButton(shouldRebuild: retrieved),
                   ),
                 ],
               ),

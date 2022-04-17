@@ -17,6 +17,12 @@ List<String> tasksList_mathematics = [];
 List<String> archivedList_mathematics = [];
 List<String> datesList_mathematics = [];
 
+void reload_mathematics() {
+  PageMathematics.tasksList = tasksList_mathematics;
+  PageMathematics.archivedList = archivedList_mathematics;
+  PageMathematics.datesList = datesList_mathematics;
+}
+
 String key_mathematics = 'mathematics';
 
 void saveLists_mathematics() {
