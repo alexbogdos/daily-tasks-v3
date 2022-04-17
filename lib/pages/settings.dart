@@ -217,13 +217,13 @@ class _PageSettingsState extends State<PageSettings> {
     return pathText;
   }
 
-  void saveFiles(String path) async {
+  Future<void> saveFiles(String path) async {
     if (await Directory(path).exists()) {
-      saveFile_personal(path);
-      saveFile_mathematics(path);
-      saveFile_greek(path);
-      saveFile_economics(path);
-      saveFile_coding(path);
+      await saveFile_personal(path);
+      await saveFile_mathematics(path);
+      await saveFile_greek(path);
+      await saveFile_economics(path);
+      await saveFile_coding(path);
       showToastMessage("Backup Created");
     } else {
       showToastMessage("PATH DOES NOT EXIST");
@@ -233,13 +233,13 @@ class _PageSettingsState extends State<PageSettings> {
     }
   }
 
-  void loadFiles(String path) async {
+  Future<void> loadFiles(String path) async {
     if (await Directory(path).exists()) {
-      readFile_personal(path);
-      readFile_mathematics(path);
-      readFile_greek(path);
-      readFile_economics(path);
-      readFile_coding(path);
+      await readFile_personal(path);
+      await readFile_mathematics(path);
+      await readFile_greek(path);
+      await readFile_economics(path);
+      await readFile_coding(path);
       showToastMessage("Backup Retrieved");
     } else {
       showToastMessage("PATH DOES NOT EXIST");
@@ -249,26 +249,26 @@ class _PageSettingsState extends State<PageSettings> {
     }
   }
 
-  void openAndSave(String path, bool save) {
+  void openAndSave(String path, bool save) async {
     if (path == "") {
       return;
     }
 
-    saveFiles(path);
+    await saveFiles(path);
     if (save == true) {
-      savePath(path);
+      await savePath(path);
     }
     path = parsePath(path);
     showToastMessage("Using:\n$path");
   }
 
-  void openAndLoad(String path, bool save) {
+  void openAndLoad(String path, bool save) async {
     if (path == "") {
       return;
     }
-    loadFiles(path);
+    await loadFiles(path);
     if (save == true) {
-      savePath(path);
+      await savePath(path);
     }
     path = parsePath(path);
     showToastMessage("Using:\n$path");
@@ -303,7 +303,7 @@ class _PageSettingsState extends State<PageSettings> {
   }
 }
 
-void savePath(String path) async {
+Future<void> savePath(String path) async {
   if (path != "") {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("backupPath", path);
