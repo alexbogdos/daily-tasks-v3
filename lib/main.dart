@@ -28,21 +28,8 @@ class MainPage extends StatelessWidget {
   final Color titleColor = const Color(0xFF343434);
   final Color buttonColor = const Color(0xFFfdfdfd);
 
-  void reloadPages() {
-    reload_personal();
-    reload_mathematics();
-    reload_economics();
-    reload_greek();
-    reload_greek();
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (toRebuild == true) {
-      reloadPages();
-      toRebuild = false;
-    }
-
     return Scaffold(
       backgroundColor: backgroundColor,
       body: SafeArea(

@@ -1,5 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:daily_tasks_v3/pages/settings.dart';
+import 'package:daily_tasks_v3/pages/coding.dart';
+import 'package:daily_tasks_v3/pages/economics.dart';
+import 'package:daily_tasks_v3/pages/greek.dart';
+import 'package:daily_tasks_v3/pages/mathematics.dart';
+import 'package:daily_tasks_v3/pages/personal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,13 +17,6 @@ class SettingsBottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String text;
-    if (shouldRebuild == true) {
-      text = "Apply & Restart";
-    } else {
-      text = "Go Back";
-    }
-
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       height: MediaQuery.of(context).size.height * 0.06,
@@ -40,7 +37,7 @@ class SettingsBottomButton extends StatelessWidget {
           FittedBox(
             fit: BoxFit.scaleDown,
             child: AutoSizeText(
-              text,
+              "Back",
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
                 color: Colors.white,
@@ -53,11 +50,13 @@ class SettingsBottomButton extends StatelessWidget {
             onPressed: () async {
               await Future.delayed(const Duration(milliseconds: 125), () {
                 if (shouldRebuild == true) {
-                  Navigator.of(context).popAndPushNamed('/');
-                  toRebuild = true;
-                } else {
-                  Navigator.of(context).pop();
+                  reload_personal();
+                  reload_mathematics();
+                  reload_economics();
+                  reload_greek();
+                  reload_coding();
                 }
+                Navigator.of(context).pop();
               });
             },
             child: const Text(''),

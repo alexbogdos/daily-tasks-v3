@@ -16,8 +16,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-bool toRebuild = false;
-
 String? _directoryPath = "";
 String? _tempDirectoryPath = "";
 
