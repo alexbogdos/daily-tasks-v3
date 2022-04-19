@@ -50,11 +50,11 @@ class SettingsBottomButton extends StatelessWidget {
             onPressed: () async {
               await Future.delayed(const Duration(milliseconds: 125), () {
                 if (shouldRebuild == true) {
-                  reload_personal();
-                  reload_mathematics();
-                  reload_economics();
-                  reload_greek();
-                  reload_coding();
+                  PagePersonal.retrieved = false;
+                  PageMathematics.retrieved = false;
+                  PageEconomics.retrieved = false;
+                  PageGreek.retrieved = false;
+                  PageCoding.retrieved = false;
                 }
                 Navigator.of(context).pop();
               });

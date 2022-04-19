@@ -11,6 +11,8 @@ TasksPage PageGreek = TasksPage(
   archivedList: archivedList_greek,
   datesList: datesList_greek,
   saveLists: saveLists_greek,
+  retrieveLists: retrieveLists_greek,
+  reloadLists: reload_greek,
 );
 
 List<String> tasksList_greek = [];

@@ -11,6 +11,8 @@ TasksPage PageMathematics = TasksPage(
   archivedList: archivedList_mathematics,
   datesList: datesList_mathematics,
   saveLists: saveLists_mathematics,
+  retrieveLists: retrieveLists_mathematics,
+  reloadLists: reload_mathematics,
 );
 
 List<String> tasksList_mathematics = [];

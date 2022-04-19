@@ -11,6 +11,8 @@ TasksPage PageEconomics = TasksPage(
   archivedList: archivedList_economics,
   datesList: datesList_economics,
   saveLists: saveLists_economics,
+  retrieveLists: retrieveLists_economics,
+  reloadLists: reload_economics,
 );
 
 List<String> tasksList_economics = [];

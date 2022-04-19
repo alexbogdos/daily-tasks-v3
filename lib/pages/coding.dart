@@ -11,6 +11,8 @@ TasksPage PageCoding = TasksPage(
   archivedList: archivedList_coding,
   datesList: datesList_coding,
   saveLists: saveLists_coding,
+  retrieveLists: retrieveLists_coding,
+  reloadLists: reload_coding,
 );
 
 List<String> tasksList_coding = [];

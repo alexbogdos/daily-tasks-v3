@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:daily_tasks_v3/widgets/custom_list_builder.dart';
+import 'package:daily_tasks_v3/widgets/custom_list_builders.dart';
 import 'package:daily_tasks_v3/widgets/custom_tabbar.dart';
 import 'package:daily_tasks_v3/widgets/new_task_button.dart';
 import 'package:flutter/foundation.dart';
@@ -17,6 +17,8 @@ class TasksPage extends StatefulWidget {
       required this.archivedList,
       required this.datesList,
       required this.saveLists,
+      required this.retrieveLists,
+      required this.reloadLists,
       Key? key})
       : super(key: key);
 
@@ -25,13 +27,27 @@ class TasksPage extends StatefulWidget {
   late List<String> tasksList;
   late List<String> archivedList;
   late List<String> datesList;
-  final saveLists;
+  final Function saveLists;
+  final Function retrieveLists;
+  final Function reloadLists;
+
+  late bool retrieved = false;
+
+  late ScrollController scrollController1 = ScrollController();
+  late ScrollController scrollController2 = ScrollController();
 
   @override
   _TasksPageState createState() => _TasksPageState();
 }
 
 class _TasksPageState extends State<TasksPage> {
+  @override
+  void dispose() {
+    // widget.scrollController1.dispose();
+    // widget.scrollController2.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,6 +107,7 @@ class _TasksPageState extends State<TasksPage> {
                                 alignment: const AlignmentDirectional(0, 1),
                                 children: [
                                   Scrollbar(
+                                    controller: widget.scrollController1,
                                     thickness: 8,
                                     interactive: true,
                                     radius: const Radius.circular(5),
@@ -102,8 +119,8 @@ class _TasksPageState extends State<TasksPage> {
 
                                       // Tasks List
                                       child: TasksListBuilder(
-                                        widget: widget,
-                                        refreshParrent: refresh,
+                                        tasksPage: widget,
+                                        notifyParent: refresh,
                                       ),
                                     ),
                                   ),
@@ -123,12 +140,16 @@ class _TasksPageState extends State<TasksPage> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 10, 0, 0),
                               child: Scrollbar(
+                                controller: widget.scrollController2,
                                 thickness: 8,
                                 interactive: true,
                                 radius: const Radius.circular(5),
 
                                 // Archived Tasks List
-                                child: ArchivedListBuilder(widget: widget),
+                                child: ArchivedListBuilder(
+                                  tasksPage: widget,
+                                  notifyParent: refresh,
+                                ),
                               ),
                             ),
                           ],
@@ -146,6 +167,9 @@ class _TasksPageState extends State<TasksPage> {
   }
 
   void refresh(Function function) {
+    if (mounted == false) {
+      return;
+    }
     setState(() {
       if (kDebugMode) {
         print("refreshed");

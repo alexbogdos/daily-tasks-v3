@@ -11,6 +11,8 @@ TasksPage PagePersonal = TasksPage(
   archivedList: archivedList_personal,
   datesList: datesList_personal,
   saveLists: saveLists_personal,
+  retrieveLists: retrieveLists_personal,
+  reloadLists: reload_personal,
 );
 
 List<String> tasksList_personal = [];
