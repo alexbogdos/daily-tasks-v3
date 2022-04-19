@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:daily_tasks_v3/widgets/archivedTask.dart';
 import 'package:daily_tasks_v3/widgets/custom_list_builder.dart';
 import 'package:daily_tasks_v3/widgets/custom_tabbar.dart';
 import 'package:daily_tasks_v3/widgets/new_task_button.dart';
@@ -21,8 +20,8 @@ class TasksPage extends StatefulWidget {
       Key? key})
       : super(key: key);
 
-  final List<Color> backgroundColors;
   final title;
+  final List<Color> backgroundColors;
   late List<String> tasksList;
   late List<String> archivedList;
   late List<String> datesList;
@@ -102,14 +101,10 @@ class _TasksPageState extends State<TasksPage> {
                                       ),
 
                                       // Tasks List
-                                      child: CustomListBuilder(
-                                          tasksList: widget.tasksList,
-                                          archivedList: widget.archivedList,
-                                          datesList: widget.datesList,
-                                          refreshParrent: refresh,
-                                          backgroundColors:
-                                              widget.backgroundColors,
-                                          saveLists: widget.saveLists),
+                                      child: TasksListBuilder(
+                                        widget: widget,
+                                        refreshParrent: refresh,
+                                      ),
                                     ),
                                   ),
                                   Padding(
@@ -133,21 +128,7 @@ class _TasksPageState extends State<TasksPage> {
                                 radius: const Radius.circular(5),
 
                                 // Archived Tasks List
-                                child: ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: widget.archivedList.length,
-                                  itemBuilder: (context, index) {
-                                    return ArchivedTask(
-                                      context: context,
-                                      index: index,
-                                      text: widget.archivedList[index],
-                                      colors: widget.backgroundColors,
-                                      date: index < widget.datesList.length
-                                          ? widget.datesList[index]
-                                          : "0/0",
-                                    );
-                                  },
-                                ),
+                                child: ArchivedListBuilder(widget: widget),
                               ),
                             ),
                           ],

@@ -9,11 +9,17 @@ class SettingsBottomButton extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final String text = "Go Back";
   final bool shouldRebuild;
 
   @override
   Widget build(BuildContext context) {
+    String text;
+    if (shouldRebuild == true) {
+      text = "Apply & Restart";
+    } else {
+      text = "Go Back";
+    }
+
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       height: MediaQuery.of(context).size.height * 0.06,

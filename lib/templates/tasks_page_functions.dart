@@ -38,7 +38,7 @@ Future<List<List<String>>> retrieveLists(
     final List<String>? _archivedList =
         prefs.getStringList('archivedList_$key');
     if (_archivedList != null) {
-      archivedList.addAll(_archivedList);
+      archivedList = _archivedList;
     }
   } else {
     if (kDebugMode) {

@@ -18,7 +18,7 @@ class NewTaskButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
+      width: MediaQuery.of(context).size.width * 0.6,
       height: MediaQuery.of(context).size.height * 0.06,
       decoration: BoxDecoration(
         color: const Color(0xFF6d69f0),
