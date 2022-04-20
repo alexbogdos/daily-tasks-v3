@@ -136,6 +136,7 @@ void retrieveData(
   notifyParent(() {
     tasksPage.reloadLists();
     tasksPage.retrieved = true;
+    tasksPage.opened = true;
   });
 
   // Future.delayed(const Duration(milliseconds: 0), () async {});

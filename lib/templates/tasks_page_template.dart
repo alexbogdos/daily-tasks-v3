@@ -33,6 +33,8 @@ class TasksPage extends StatefulWidget {
 
   late bool retrieved = false;
 
+  late bool opened = false;
+
   late ScrollController scrollController1 = ScrollController();
   late ScrollController scrollController2 = ScrollController();
 
@@ -41,13 +43,6 @@ class TasksPage extends StatefulWidget {
 }
 
 class _TasksPageState extends State<TasksPage> {
-  @override
-  void dispose() {
-    // widget.scrollController1.dispose();
-    // widget.scrollController2.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

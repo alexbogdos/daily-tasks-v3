@@ -217,11 +217,26 @@ class _PageSettingsState extends State<PageSettings> {
 
   Future<void> saveFiles(String path) async {
     if (await Directory(path).exists()) {
-      await saveFile_personal(path);
-      await saveFile_mathematics(path);
-      await saveFile_greek(path);
-      await saveFile_economics(path);
-      await saveFile_coding(path);
+      if (PagePersonal.opened == true) {
+        await saveFile_personal(path);
+      }
+
+      if (PageMathematics.opened == true) {
+        await saveFile_mathematics(path);
+      }
+
+      if (PageEconomics.opened == true) {
+        await saveFile_economics(path);
+      }
+
+      if (PageGreek.opened == true) {
+        await saveFile_greek(path);
+      }
+
+      if (PageCoding.opened == true) {
+        await saveFile_coding(path);
+      }
+
       showToastMessage("Backup Created");
     } else {
       showToastMessage("PATH DOES NOT EXIST");
