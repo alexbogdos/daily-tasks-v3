@@ -217,25 +217,30 @@ class _PageSettingsState extends State<PageSettings> {
 
   Future<void> saveFiles(String path) async {
     if (await Directory(path).exists()) {
-      if (PagePersonal.opened == true) {
-        await saveFile_personal(path);
+      if (PagePersonal.opened == false) {
+        await retrieveLists_personal();
       }
+      await saveFile_personal(path);
 
-      if (PageMathematics.opened == true) {
-        await saveFile_mathematics(path);
+      if (PageMathematics.opened == false) {
+        await retrieveLists_mathematics();
       }
+      await saveFile_mathematics(path);
 
-      if (PageEconomics.opened == true) {
-        await saveFile_economics(path);
+      if (PageEconomics.opened == false) {
+        await retrieveLists_economics();
       }
+      await saveFile_economics(path);
 
-      if (PageGreek.opened == true) {
-        await saveFile_greek(path);
+      if (PageGreek.opened == false) {
+        await retrieveLists_greek();
       }
+      await saveFile_greek(path);
 
-      if (PageCoding.opened == true) {
-        await saveFile_coding(path);
+      if (PageCoding.opened == false) {
+        await retrieveLists_coding();
       }
+      await saveFile_coding(path);
 
       showToastMessage("Backup Created");
     } else {
