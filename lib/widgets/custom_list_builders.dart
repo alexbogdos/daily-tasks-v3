@@ -37,7 +37,7 @@ class _TasksListBuilderState extends State<TasksListBuilder> {
         scrollDirection: Axis.vertical,
         itemCount: widget.tasksPage.tasksList.length + 1,
         onReorder: (int oldIndex, int newIndex) {
-          if (oldIndex <= widget.tasksPage.tasksList.length &&
+          if (oldIndex < widget.tasksPage.tasksList.length &&
               newIndex <= widget.tasksPage.tasksList.length) {
             widget.notifyParent(() {
               if (newIndex > oldIndex) {

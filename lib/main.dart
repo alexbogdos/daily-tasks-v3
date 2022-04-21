@@ -34,6 +34,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     loadPath();
+    loadLastBackupDate();
   }
 
   final Color backgroundColor = const Color(0xFFf0f1f2);

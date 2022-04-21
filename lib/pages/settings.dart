@@ -1,4 +1,5 @@
 import 'dart:io' show Directory, Platform;
+import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daily_tasks_v3/pages/coding.dart';
@@ -7,6 +8,7 @@ import 'package:daily_tasks_v3/pages/greek.dart';
 import 'package:daily_tasks_v3/pages/mathematics.dart';
 import 'package:daily_tasks_v3/pages/personal.dart';
 import 'package:daily_tasks_v3/widgets/action_button.dart';
+import 'package:daily_tasks_v3/widgets/date_indicator.dart';
 import 'package:daily_tasks_v3/widgets/settings_bottom_button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -18,6 +20,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String? _directoryPath = "";
 String? _tempDirectoryPath = "";
+
+String _lastBackupDate = "";
 
 class PageSettings extends StatefulWidget {
   const PageSettings({Key? key}) : super(key: key);
@@ -65,122 +69,135 @@ class _PageSettingsState extends State<PageSettings> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
-                    child: Column(
+                    child: Stack(
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.74,
-                          height: MediaQuery.of(context).size.height * 0.12,
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                10, 10, 0, 0),
-                            child: AutoSizeText(
-                              'Settings:',
-                              style: GoogleFonts.poppins(
-                                fontSize: 30,
-                                color: const Color(0xFF343434),
-                                fontWeight: FontWeight.w700,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 2.0,
-                                    color: const Color(0xFF343434)
-                                        .withOpacity(0.1),
-                                    offset: const Offset(5.0, 5.0),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.74,
+                              height: MediaQuery.of(context).size.height * 0.12,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 10, 0, 0),
+                                child: AutoSizeText(
+                                  'Settings:',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 30,
+                                    color: const Color(0xFF343434),
+                                    fontWeight: FontWeight.w700,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 2.0,
+                                        color: const Color(0xFF343434)
+                                            .withOpacity(0.1),
+                                        offset: const Offset(5.0, 5.0),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.06,
-                        ),
-                        Center(
-                          child: AutoSizeText(
-                            "Selected Path:",
-                            style: GoogleFonts.poppins(
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.w600,
-                              color: const Color(0xFF343434).withOpacity(0.9),
-                            ),
-                          ),
-                        ),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 0),
-                              child: AutoSizeText(
-                                parsePath("$_directoryPath"),
-                                style: GoogleFonts.poppins(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w400,
-                                  color:
-                                      const Color(0xFF343434).withOpacity(0.8),
                                 ),
                               ),
                             ),
-                          ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.06,
+                            ),
+                            Center(
+                              child: AutoSizeText(
+                                "Selected Path:",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.w600,
+                                  color:
+                                      const Color(0xFF343434).withOpacity(0.9),
+                                ),
+                              ),
+                            ),
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 0),
+                                  child: AutoSizeText(
+                                    parsePath("$_directoryPath"),
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xFF343434)
+                                          .withOpacity(0.8),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.08,
+                            ),
+                            ActionButton(
+                              context: context,
+                              title: "Select Backup Folder",
+                              widthP: 0.6,
+                              heightP: 0.08,
+                              color: const Color(0xFFFFFFFF).withOpacity(0.9),
+                              function: () {
+                                _selectFolder().then((value) =>
+                                    savePath(path: "$_directoryPath"));
+                              },
+                              function2: () {},
+                            ),
+                            const SizedBox(height: 20),
+                            Center(
+                              child: ActionButton(
+                                context: context,
+                                title: "Create Backup",
+                                widthP: 0.6,
+                                heightP: 0.08,
+                                color: const Color(0xFFFFFFFF).withOpacity(0.9),
+                                function: () async {
+                                  if (_directoryPath == "") {
+                                    _selectFolder().then((value) =>
+                                        openAndSave("$_directoryPath", true));
+                                  } else {
+                                    saveFiles("$_directoryPath");
+                                  }
+                                },
+                                function2: () async {
+                                  _selectTempFolder().then((value) =>
+                                      openAndSave(
+                                          "$_tempDirectoryPath", false));
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            ActionButton(
+                              context: context,
+                              title: "Retrieve Backup",
+                              widthP: 0.6,
+                              heightP: 0.08,
+                              color: const Color(0xFFFFFFFF).withOpacity(0.9),
+                              function: () async {
+                                setState(() {
+                                  retrieved = true;
+                                });
+                                if (_directoryPath == "") {
+                                  _selectFolder().then((value) =>
+                                      openAndLoad("$_directoryPath", true));
+                                } else {
+                                  loadFiles("$_directoryPath");
+                                }
+                              },
+                              function2: () async {
+                                retrieved = true;
+                                _selectTempFolder().then((value) =>
+                                    openAndLoad("$_tempDirectoryPath", false));
+                              },
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                        ),
-                        ActionButton(
-                          context: context,
-                          title: "Select Backup Folder",
-                          widthP: 0.6,
-                          heightP: 0.08,
-                          color: const Color(0xFFFFFFFF).withOpacity(0.9),
-                          function: () {
-                            _selectFolder()
-                                .then((value) => savePath("$_directoryPath"));
-                          },
-                          function2: () {},
-                        ),
-                        const SizedBox(height: 20),
-                        ActionButton(
-                          context: context,
-                          title: "Create Backup",
-                          widthP: 0.6,
-                          heightP: 0.08,
-                          color: const Color(0xFFFFFFFF).withOpacity(0.9),
-                          function: () async {
-                            if (_directoryPath == "") {
-                              _selectFolder().then((value) =>
-                                  openAndSave("$_directoryPath", true));
-                            } else {
-                              saveFiles("$_directoryPath");
-                            }
-                          },
-                          function2: () async {
-                            _selectTempFolder().then((value) =>
-                                openAndSave("$_tempDirectoryPath", false));
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        ActionButton(
-                          context: context,
-                          title: "Retrieve Backup",
-                          widthP: 0.6,
-                          heightP: 0.08,
-                          color: const Color(0xFFFFFFFF).withOpacity(0.9),
-                          function: () async {
-                            setState(() {
-                              retrieved = true;
-                            });
-                            if (_directoryPath == "") {
-                              _selectFolder().then((value) =>
-                                  openAndLoad("$_directoryPath", true));
-                            } else {
-                              loadFiles("$_directoryPath");
-                            }
-                          },
-                          function2: () async {
-                            retrieved = true;
-                            _selectTempFolder().then((value) =>
-                                openAndLoad("$_tempDirectoryPath", false));
-                          },
+                        Align(
+                          alignment: const Alignment(0.56, 0.01),
+                          child: DateIndicator(date: _lastBackupDate),
                         ),
                       ],
                     ),
@@ -242,6 +259,18 @@ class _PageSettingsState extends State<PageSettings> {
       }
       await saveFile_coding(path);
 
+      String month = "${DateTime.now().day}/${DateTime.now().month}";
+      String minutes = "${DateTime.now().hour}:${DateTime.now().minute}";
+
+      if (DateTime.now().minute < 10) {
+        minutes = "${DateTime.now().hour}:0${DateTime.now().minute}";
+      }
+
+      setState(() {
+        _lastBackupDate = "$month $minutes";
+      });
+      await saveLastBackupDate();
+
       showToastMessage("Backup Created");
     } else {
       showToastMessage("PATH DOES NOT EXIST");
@@ -274,7 +303,7 @@ class _PageSettingsState extends State<PageSettings> {
 
     await saveFiles(path);
     if (save == true) {
-      await savePath(path);
+      await savePath(path: path);
     }
     path = parsePath(path);
     showToastMessage("Using:\n$path");
@@ -286,7 +315,7 @@ class _PageSettingsState extends State<PageSettings> {
     }
     await loadFiles(path);
     if (save == true) {
-      await savePath(path);
+      await savePath(path: path);
     }
     path = parsePath(path);
     showToastMessage("Using:\n$path");
@@ -321,7 +350,7 @@ class _PageSettingsState extends State<PageSettings> {
   }
 }
 
-Future<void> savePath(String path) async {
+Future<void> savePath({required String path}) async {
   if (path != "") {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("backupPath", path);
@@ -335,6 +364,24 @@ Future<void> loadPath() async {
 
     if (!(await Directory(_directoryPath!).exists())) {
       _directoryPath = "";
+    }
+  }
+}
+
+Future<void> saveLastBackupDate() async {
+  if (_lastBackupDate != "") {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("lastDate", _lastBackupDate);
+  }
+}
+
+Future<void> loadLastBackupDate() async {
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.containsKey("lastDate")) {
+    _lastBackupDate = prefs.getString("lastDate")!;
+
+    if (!(await Directory(_directoryPath!).exists())) {
+      _lastBackupDate = "";
     }
   }
 }
