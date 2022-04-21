@@ -42,15 +42,18 @@ class _ActionButtonState extends State<ActionButton> {
   @override
   Widget build(BuildContext context) {
     context = widget.context;
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 175),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
         color: Colors.transparent,
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF343434).withOpacity(0.1),
+            color: !highlighted
+                ? titleColor.withOpacity(0.1)
+                : titleColor.withOpacity(0.25),
             blurRadius: 6.0,
-            offset: const Offset(6, 6),
+            offset: !highlighted ? const Offset(6, 6) : const Offset(10, 10),
           ),
         ],
       ),

@@ -48,6 +48,7 @@ class EditTaskDialog {
                 dialogTitle(isNew: isNew),
                 Form(
                   child: TextFormField(
+                    autofocus: true,
                     validator: (value) {
                       return value!.isNotEmpty ? null : "Invalid Field";
                     },

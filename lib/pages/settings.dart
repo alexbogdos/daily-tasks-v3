@@ -72,87 +72,85 @@ class _PageSettingsState extends State<PageSettings> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
-                      child: Stack(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.74,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.12,
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 10, 0, 0),
-                                  child: AutoSizeText(
-                                    'Settings:',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 30,
-                                      color: const Color(0xFF343434),
-                                      fontWeight: FontWeight.w700,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 2.0,
-                                          color: const Color(0xFF343434)
-                                              .withOpacity(0.1),
-                                          offset: const Offset(5.0, 5.0),
-                                        ),
-                                      ],
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.74,
+                            height: MediaQuery.of(context).size.height * 0.12,
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  10, 10, 0, 0),
+                              child: AutoSizeText(
+                                'Settings:',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 30,
+                                  color: const Color(0xFF343434),
+                                  fontWeight: FontWeight.w700,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 2.0,
+                                      color: const Color(0xFF343434)
+                                          .withOpacity(0.1),
+                                      offset: const Offset(5.0, 5.0),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.06,
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                          ),
+                          Center(
+                            child: AutoSizeText(
+                              "Selected Path:",
+                              style: GoogleFonts.poppins(
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF343434).withOpacity(0.9),
                               ),
-                              Center(
+                            ),
+                          ),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 0),
                                 child: AutoSizeText(
-                                  "Selected Path:",
+                                  parsePath("$_directoryPath"),
                                   style: GoogleFonts.poppins(
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w400,
                                     color: const Color(0xFF343434)
-                                        .withOpacity(0.9),
+                                        .withOpacity(0.8),
                                   ),
                                 ),
                               ),
-                              FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 0),
-                                    child: AutoSizeText(
-                                      parsePath("$_directoryPath"),
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: const Color(0xFF343434)
-                                            .withOpacity(0.8),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.08,
-                              ),
-                              ActionButton(
-                                context: context,
-                                title: "Select Backup Folder",
-                                widthP: 0.6,
-                                heightP: 0.08,
-                                color: const Color(0xFFFFFFFF).withOpacity(0.9),
-                                function: () {
-                                  _selectFolder().then((value) =>
-                                      savePath(path: "$_directoryPath"));
-                                },
-                                function2: () {},
-                              ),
-                              const SizedBox(height: 20),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.08,
+                          ),
+                          ActionButton(
+                            context: context,
+                            title: "Select Backup Folder",
+                            widthP: 0.6,
+                            heightP: 0.08,
+                            color: const Color(0xFFFFFFFF).withOpacity(0.9),
+                            function: () {
+                              _selectFolder().then(
+                                  (value) => savePath(path: "$_directoryPath"));
+                            },
+                            function2: () {},
+                          ),
+                          const SizedBox(height: 18),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height *
+                                (0.08 + 0.02),
+                            child: Stack(children: [
                               Center(
                                 child: ActionButton(
                                   context: context,
@@ -176,36 +174,35 @@ class _PageSettingsState extends State<PageSettings> {
                                   },
                                 ),
                               ),
-                              const SizedBox(height: 20),
-                              ActionButton(
-                                context: context,
-                                title: "Retrieve Backup",
-                                widthP: 0.6,
-                                heightP: 0.08,
-                                color: const Color(0xFFFFFFFF).withOpacity(0.9),
-                                function: () async {
-                                  setState(() {
-                                    retrieved = true;
-                                  });
-                                  if (_directoryPath == "") {
-                                    _selectFolder().then((value) =>
-                                        openAndLoad("$_directoryPath", true));
-                                  } else {
-                                    loadFiles("$_directoryPath");
-                                  }
-                                },
-                                function2: () async {
-                                  retrieved = true;
-                                  _selectTempFolder().then((value) =>
-                                      openAndLoad(
-                                          "$_tempDirectoryPath", false));
-                                },
+                              Align(
+                                alignment: const Alignment(0.56, -1),
+                                child: DateIndicator(date: _lastBackupDate),
                               ),
-                            ],
+                            ]),
                           ),
-                          Align(
-                            alignment: const Alignment(0.56, 0.01),
-                            child: DateIndicator(date: _lastBackupDate),
+                          const SizedBox(height: 20),
+                          ActionButton(
+                            context: context,
+                            title: "Retrieve Backup",
+                            widthP: 0.6,
+                            heightP: 0.08,
+                            color: const Color(0xFFFFFFFF).withOpacity(0.9),
+                            function: () async {
+                              setState(() {
+                                retrieved = true;
+                              });
+                              if (_directoryPath == "") {
+                                _selectFolder().then((value) =>
+                                    openAndLoad("$_directoryPath", true));
+                              } else {
+                                loadFiles("$_directoryPath");
+                              }
+                            },
+                            function2: () async {
+                              retrieved = true;
+                              _selectTempFolder().then((value) =>
+                                  openAndLoad("$_tempDirectoryPath", false));
+                            },
                           ),
                         ],
                       ),

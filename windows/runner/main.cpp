@@ -27,7 +27,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
   FlutterWindow window(project);
   Win32Window::Point origin(10, 10);
   Win32Window::Size size(464, 800);
-  if (!window.CreateAndShow(L"daily_tasks_v3", origin, size)) {
+  if (!window.CreateAndShow(L"Daily Tasks V3", origin, size)) {
     return EXIT_FAILURE;
   }
   window.SetQuitOnClose(true);
