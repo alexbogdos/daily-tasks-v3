@@ -1,5 +1,6 @@
 import 'package:daily_tasks_v3/templates/tasks_page_template.dart';
 import 'package:daily_tasks_v3/widgets/archivedTask.dart';
+import 'package:daily_tasks_v3/widgets/custom_indicator.dart';
 import 'package:daily_tasks_v3/widgets/task_slidable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _TasksListBuilderState extends State<TasksListBuilder> {
     if (widget.tasksPage.retrieved == false) {
       // retrieveData(
       //     notifyParent: widget.notifyParent, tasksPage: widget.tasksPage);
-      return customIndicator(
+      return customTasksPageIndicator(
           function: retrieveData,
           notifyParent: widget.notifyParent,
           tasksPage: widget.tasksPage);
@@ -93,7 +94,7 @@ class _ArchivedListBuilderState extends State<ArchivedListBuilder> {
   @override
   Widget build(BuildContext context) {
     if (widget.tasksPage.retrieved == false) {
-      return customIndicator(
+      return customTasksPageIndicator(
           function: retrieveData,
           notifyParent: widget.notifyParent,
           tasksPage: widget.tasksPage);
@@ -140,24 +141,4 @@ void retrieveData(
   });
 
   // Future.delayed(const Duration(milliseconds: 0), () async {});
-}
-
-Container customIndicator(
-    {required Function function,
-    required Function notifyParent,
-    required TasksPage tasksPage}) {
-  const Color backgroundColor = Color(0xFFf0f1f2);
-  const Color titleColor = Color(0xFF343434);
-  const Color buttonColor = Color(0xFFfdfdfd);
-
-  function(notifyParent: notifyParent, tasksPage: tasksPage);
-
-  return Container(
-    color: backgroundColor,
-    child: const Center(
-        child: CircularProgressIndicator(
-      backgroundColor: buttonColor,
-      color: titleColor,
-    )),
-  );
 }

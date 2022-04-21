@@ -30,12 +30,12 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  @override
-  void initState() {
-    super.initState();
-    loadPath();
-    loadLastBackupDate();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   loadPath();
+  //   loadLastBackupDate();
+  // }
 
   final Color backgroundColor = const Color(0xFFf0f1f2);
   final Color titleColor = const Color(0xFF343434);
