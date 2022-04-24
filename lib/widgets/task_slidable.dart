@@ -4,6 +4,7 @@ import 'dart:io' show Platform;
 import 'package:daily_tasks_v3/widgets/edittask_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -55,6 +56,26 @@ class _TaskSlidableState extends State<TaskSlidable> {
     });
   }
 
+  void delete(BuildContext context) {
+    if (kDebugMode) {
+      print(
+          "delete task:\n  index: ${widget.index}\n  string: '${widget.text}'");
+    }
+
+    _deleteNotify();
+  }
+
+  void _deleteNotify() {
+    confirmationDialog(
+      context,
+      tasksList: widget.tasksList,
+      index: widget.index,
+      text: widget.text,
+      saveLists: widget.saveLists,
+      notifyParent: widget.notifyParent,
+    );
+  }
+
   void edit(BuildContext context) {
     if (kDebugMode) {
       print("edit task:\n  index: ${widget.index}\n  string: '${widget.text}'");
@@ -71,17 +92,45 @@ class _TaskSlidableState extends State<TaskSlidable> {
     ).show().then((value) => widget.notifyParent(widget.saveLists));
   }
 
+  void copy(BuildContext context) {
+    if (kDebugMode) {
+      print(
+          "copied task:\n  index: ${widget.index}\n  string: '${widget.text}'");
+    }
+
+    Clipboard.setData(ClipboardData(text: "${widget.text}"));
+  }
+
+  void duplicate(BuildContext context) {
+    if (kDebugMode) {
+      print(
+          "duplicate task:\n  index: ${widget.index}\n  string: '${widget.text}'");
+    }
+
+    widget.notifyParent(() {
+      widget.tasksList
+          .insert(widget.index + 1, widget.tasksList.elementAt(widget.index));
+      widget.saveLists();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Slidable(
       // The start action pane is the one at the left or the top side.
       startActionPane: ActionPane(
         // A motion is a widget used to control how the pane animates.
-        motion: const ScrollMotion(),
+        motion: const DrawerMotion(),
 
         // All actions are defined in the children parameter.
         children: [
           // A SlidableAction can have an icon and/or a label.
+          SlidableAction(
+            onPressed: delete,
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.black54,
+            icon: Icons.delete_rounded,
+          ),
           SlidableAction(
             onPressed: archive,
             backgroundColor: Colors.transparent,
@@ -93,13 +142,25 @@ class _TaskSlidableState extends State<TaskSlidable> {
 
       // The end action pane is the one at the right or the bottom side.
       endActionPane: ActionPane(
-        motion: const ScrollMotion(),
+        motion: const DrawerMotion(),
         children: [
           SlidableAction(
             onPressed: edit,
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.black54,
             icon: Icons.edit_rounded,
+          ),
+          SlidableAction(
+            onPressed: copy,
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.black54,
+            icon: Icons.copy_rounded,
+          ),
+          SlidableAction(
+            onPressed: duplicate,
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.black54,
+            icon: Icons.paste_rounded,
           ),
         ],
       ),
@@ -136,6 +197,89 @@ class _TaskSlidableState extends State<TaskSlidable> {
       ),
     );
   }
+}
+
+void confirmationDialog(BuildContext context,
+    {required List<String> tasksList,
+    required int index,
+    required String text,
+    required Function saveLists,
+    required Function notifyParent}) {
+  String subtext = text;
+
+  int times = 0;
+  int _index = 0;
+  for (String char in subtext.characters) {
+    if (char == " " && times < 3) {
+      times += 1;
+    } else if (times >= 3) {
+      break;
+    }
+    _index += 1;
+  }
+
+  if (times >= 3 && _index - 1 <= subtext.lastIndexOf(" ")) {
+    subtext = "${subtext.substring(0, _index - 1)}..";
+  }
+
+  showDialog(
+    context: context,
+    builder: (BuildContext ctx) {
+      return AlertDialog(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        title: Text(
+          'Confirmation',
+          style: GoogleFonts.poppins(
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
+        ),
+        content: Text(
+          'This action is irreversible.\nDelete "$subtext" ?',
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              notifyParent(() {
+                tasksList.removeAt(index);
+                saveLists();
+                Navigator.of(context).pop();
+              });
+            },
+            style: TextButton.styleFrom(primary: Colors.redAccent),
+            child: Text(
+              'Yes',
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: Colors.redAccent,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            style: TextButton.styleFrom(primary: Colors.blueAccent),
+            child: Text(
+              'No',
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: Colors.blueAccent,
+              ),
+            ),
+          )
+        ],
+      );
+    },
+  );
 }
 
 Widget parseText(String text) {

@@ -21,6 +21,7 @@ class EditTaskDialog {
   final bool isNew;
 
   late String text;
+  late bool autofocus = true;
 
   Future<void> show() async {
     text = tasksList[index];
@@ -48,7 +49,7 @@ class EditTaskDialog {
                 dialogTitle(isNew: isNew),
                 Form(
                   child: TextFormField(
-                    autofocus: true,
+                    autofocus: getAutofocus(),
                     validator: (value) {
                       return value!.isNotEmpty ? null : "Invalid Field";
                     },
@@ -116,69 +117,14 @@ class EditTaskDialog {
       ),
     );
   }
-}
 
-void _confirmationDialog(BuildContext context,
-    {required List<String> tasksList,
-    required int index,
-    required Function notifyParent}) {
-  showDialog(
-    context: context,
-    builder: (BuildContext ctx) {
-      return AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        title: Text(
-          'Confirmation',
-          style: GoogleFonts.poppins(
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
-        content: Text(
-          'This action is irreversible. Continue?',
-          style: GoogleFonts.poppins(
-            fontSize: 16,
-            color: Colors.black,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              tasksList.removeAt(index);
-              Navigator.of(context).pop();
-              notifyParent();
-              Navigator.of(context).pop();
-            },
-            style: TextButton.styleFrom(primary: Colors.redAccent),
-            child: Text(
-              'Yes',
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.redAccent,
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            style: TextButton.styleFrom(primary: Colors.blueAccent),
-            child: Text(
-              'No',
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.blueAccent,
-              ),
-            ),
-          )
-        ],
-      );
-    },
-  );
+  bool getAutofocus() {
+    bool _autofocus = autofocus;
+    if (autofocus == true) {
+      autofocus = false;
+    }
+    return _autofocus;
+  }
 }
 
 // ignore: must_be_immutable
@@ -202,64 +148,39 @@ class DialogBottomButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       mainAxisSize: MainAxisSize.max,
       children: [
-        if (isNew)
-          TextButton(
-            onPressed: () {
+        TextButton(
+          onPressed: () {
+            if (isNew) {
               tasksList.removeAt(index);
               Navigator.of(context).pop();
-              notifyParent();
-            },
-            style: TextButton.styleFrom(
-              backgroundColor: const Color(0xFFf0f1f2),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
+              // notifyParent();
+            } else {
+              Navigator.of(context).pop();
+            }
+          },
+          style: TextButton.styleFrom(
+            backgroundColor: const Color(0xFFf0f1f2),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
-              child: Text(
-                "Cancel",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  color: const Color(0xFF343434),
-                ),
-              ),
-            ),
-          )
-        else
-          TextButton(
-            onPressed: () {
-              _confirmationDialog(
-                context,
-                tasksList: tasksList,
-                index: index,
-                notifyParent: notifyParent,
-              );
-            },
-            style: TextButton.styleFrom(
-              backgroundColor: const Color(0xFFf0f1f2),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
-              child: Text(
-                "Delete",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  color: const Color(0xFF343434),
-                ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
+            child: Text(
+              "Cancel",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                color: const Color(0xFF343434),
               ),
             ),
           ),
+        ),
         TextButton(
           onPressed: () {
             tasksList[index] = editedText;
             Navigator.of(context).pop();
-            notifyParent();
+            // notifyParent();
           },
           style: TextButton.styleFrom(
             backgroundColor: const Color(0xFFf0f1f2),
