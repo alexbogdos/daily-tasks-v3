@@ -223,7 +223,12 @@ class _PageSettingsState extends State<PageSettings> {
   }
 
   Future<void> loadDepedencies() async {
-    await askPermissions();
+    bool gotPermissions = await askPermissions();
+    if (gotPermissions == false) {
+      Navigator.of(context).pop();
+      return;
+    }
+
     await loadPath();
     await loadLastBackupDate();
     setState(() {
@@ -352,9 +357,9 @@ class _PageSettingsState extends State<PageSettings> {
     );
   }
 
-  Future<void> askPermissions() async {
+  Future<bool> askPermissions() async {
     if (!Platform.isAndroid) {
-      return;
+      return true;
     }
 
     if (await Permission.storage.isGranted == false) {
@@ -364,6 +369,9 @@ class _PageSettingsState extends State<PageSettings> {
     if (await Permission.manageExternalStorage.isGranted == false) {
       await Permission.manageExternalStorage.request();
     }
+
+    return await Permission.storage.isGranted &&
+        await Permission.manageExternalStorage.isGranted;
   }
 }
 
