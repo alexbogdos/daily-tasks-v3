@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_interpolations
 import 'dart:io' show Platform;
 
+import 'package:daily_tasks_v3/widgets/confirmation_dialog.dart';
 import 'package:daily_tasks_v3/widgets/edittask_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TaskSlidable extends StatefulWidget {
@@ -99,6 +101,19 @@ class _TaskSlidableState extends State<TaskSlidable> {
     }
 
     Clipboard.setData(ClipboardData(text: "${widget.text}"));
+
+    if (!Platform.isAndroid) {
+      return;
+    }
+
+    Fluttertoast.showToast(
+      msg: "Task Copied",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.TOP,
+      backgroundColor: Colors.black54,
+      textColor: Colors.white,
+      fontSize: 18.0,
+    );
   }
 
   void duplicate(BuildContext context) {
@@ -136,6 +151,7 @@ class _TaskSlidableState extends State<TaskSlidable> {
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.black54,
             icon: Icons.archive_rounded,
+            flex: 2,
           ),
         ],
       ),
@@ -149,6 +165,7 @@ class _TaskSlidableState extends State<TaskSlidable> {
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.black54,
             icon: Icons.edit_rounded,
+            flex: 2,
           ),
           SlidableAction(
             onPressed: copy,
@@ -197,89 +214,6 @@ class _TaskSlidableState extends State<TaskSlidable> {
       ),
     );
   }
-}
-
-void confirmationDialog(BuildContext context,
-    {required List<String> tasksList,
-    required int index,
-    required String text,
-    required Function saveLists,
-    required Function notifyParent}) {
-  String subtext = text;
-
-  int times = 0;
-  int _index = 0;
-  for (String char in subtext.characters) {
-    if (char == " " && times < 3) {
-      times += 1;
-    } else if (times >= 3) {
-      break;
-    }
-    _index += 1;
-  }
-
-  if (times >= 3 && _index - 1 <= subtext.lastIndexOf(" ")) {
-    subtext = "${subtext.substring(0, _index - 1)}..";
-  }
-
-  showDialog(
-    context: context,
-    builder: (BuildContext ctx) {
-      return AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        title: Text(
-          'Confirmation',
-          style: GoogleFonts.poppins(
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
-        content: Text(
-          'This action is irreversible.\nDelete "$subtext" ?',
-          style: GoogleFonts.poppins(
-            fontSize: 16,
-            color: Colors.black,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              notifyParent(() {
-                tasksList.removeAt(index);
-                saveLists();
-                Navigator.of(context).pop();
-              });
-            },
-            style: TextButton.styleFrom(primary: Colors.redAccent),
-            child: Text(
-              'Yes',
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.redAccent,
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            style: TextButton.styleFrom(primary: Colors.blueAccent),
-            child: Text(
-              'No',
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.blueAccent,
-              ),
-            ),
-          )
-        ],
-      );
-    },
-  );
 }
 
 Widget parseText(String text) {

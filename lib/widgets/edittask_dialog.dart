@@ -21,7 +21,6 @@ class EditTaskDialog {
   final bool isNew;
 
   late String text;
-  late bool autofocus = true;
 
   Future<void> show() async {
     text = tasksList[index];
@@ -49,7 +48,7 @@ class EditTaskDialog {
                 dialogTitle(isNew: isNew),
                 Form(
                   child: TextFormField(
-                    autofocus: getAutofocus(),
+                    autofocus: true,
                     validator: (value) {
                       return value!.isNotEmpty ? null : "Invalid Field";
                     },
@@ -116,14 +115,6 @@ class EditTaskDialog {
         width: 2.4,
       ),
     );
-  }
-
-  bool getAutofocus() {
-    bool _autofocus = autofocus;
-    if (autofocus == true) {
-      autofocus = false;
-    }
-    return _autofocus;
   }
 }
 
